@@ -1,5 +1,7 @@
 import React from "react";
 import image1 from "@/assets/image1.jpg";
+import AboutPage from "@/components/AboutPage";
+import ContactPage from "@/components/ContactPage";
 
 const page = () => {
   return (
@@ -19,6 +21,9 @@ const page = () => {
           for. Set the table for a successful online venture with ease We!{" "}
         </p>
       </div>
+      <AboutPage/>
+      <ContactPage/>
+      
     </>
   );
 };

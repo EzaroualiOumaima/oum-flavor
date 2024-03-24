@@ -28,8 +28,8 @@ const page = () => {
         }}
       >
         <div className="flex flex-col gap-6 items-center justify-center w-full">
-          <h2 className="font-[JosefinSans] text-xl  text-[#C9AB81]">
-            ONLINE RESERVATION
+          <h2 className="font-[JosefinSans] text-2xl font-semibold italic text-[#C9AB81]">
+            Online Reservation
           </h2>
           <h1 className=" font-[CormorantGaramond]  text-7xl tracking-wider  ">
             Book A Table
@@ -43,7 +43,7 @@ const page = () => {
         </div>
         <form className="flex flex-col gap-6 w-full mt-16 px-12">
           <div className="grid grid-cols-3 gap-20 ">
-            <select className="w-[28rem] h-[3rem] text-lg  font-[Poppins]  text-white bg-transparent border-0 border-b-2    focus:outline-none focus:border-[#C9AB81] ">
+            <select className=" h-[3rem] text-lg  font-[Poppins]  text-white bg-transparent border-0 border-b-2    focus:outline-none focus:border-[#C9AB81] ">
               <option className="text-slate-900" value="1P">
                 1 Person
               </option>
@@ -78,9 +78,9 @@ const page = () => {
             <input
               type="date"
               value={getCurrentDate()}
-              className="w-[28rem] h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white   focus:outline-none  focus:border-[#C9AB81]"
+              className=" h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white   focus:outline-none  focus:border-[#C9AB81]"
             />
-            <select className=" w-[28rem] h-[3rem] text-lg font-[Poppins]  text-white bg-transparent border-0 border-b-2 border-gray-100    focus:outline-none focus:border-[#C9AB81]">
+            <select className="  h-[3rem] text-lg font-[Poppins]  text-white bg-transparent border-0 border-b-2 border-gray-100    focus:outline-none focus:border-[#C9AB81]">
               <option className="text-slate-900" value="11">
                 11:00 AM
               </option>
@@ -128,17 +128,17 @@ const page = () => {
             <input
               type="text"
               placeholder="Your Name"
-              className="w-[28rem] h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2  focus:outline-none  focus:border-[#C9AB81]"
+              className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2  focus:outline-none  focus:border-[#C9AB81]"
             />
             <input
               type="text"
               placeholder="Email"
-              className="w-[28rem] h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2    focus:outline-none  focus:border-[#C9AB81] "
+              className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2    focus:outline-none  focus:border-[#C9AB81] "
             />
             <input
               type="text"
               placeholder="Phone"
-              className="w-[28rem] h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100 appearance-none   focus:outline-none  focus:border-[#C9AB81] "
+              className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100 appearance-none   focus:outline-none  focus:border-[#C9AB81] "
             />
             <textarea
               placeholder="Special Requests"

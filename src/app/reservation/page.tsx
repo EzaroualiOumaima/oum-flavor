@@ -1,6 +1,9 @@
+"use client";
 import reservationImg from "@/assets/reservationImg.jpg";
 import bgImg from "@/assets/bgImg.jpg";
-const page = () => {
+import { useEffect, useState } from "react";
+const Page = () => {
+  const [minDate, setMinDate] = useState("");
   function getCurrentDate() {
     const date = new Date();
     const year = date.getFullYear();
@@ -8,6 +11,11 @@ const page = () => {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
+
+  useEffect(() => {
+    setMinDate(getCurrentDate());
+  },[]);
+
   return (
     <>
       <div
@@ -78,6 +86,7 @@ const page = () => {
             <input
               type="date"
               value={getCurrentDate()}
+              min={minDate}
               className=" h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white   focus:outline-none  focus:border-[#C9AB81]"
             />
             <select className="  h-[3rem] text-lg font-[Poppins]  text-white bg-transparent border-0 border-b-2 border-gray-100    focus:outline-none focus:border-[#C9AB81]">
@@ -156,4 +165,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

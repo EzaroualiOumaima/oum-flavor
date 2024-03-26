@@ -69,3 +69,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   @apply text-xl leading-10 font-[Poppins]
 }
 
+.input-radio {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+}
+
+.input-radio:checked + label {
+  background-color: red;
+}

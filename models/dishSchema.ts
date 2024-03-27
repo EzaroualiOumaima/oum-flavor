@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import joi from "joi";
 
-type Dish = {
+export type Dish = {
   category: string;
   title: string;
   ingredients: [string];
   price: number;
+  image:string
 };
 
 const dishSchema = new mongoose.Schema({
@@ -13,7 +14,6 @@ const dishSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    unique: true,
     minlength: 3,
     maxlength: 200,
   },
@@ -26,13 +26,13 @@ const dishSchema = new mongoose.Schema({
     maxlength: 200,
   },
   ingredients: {
-    type: [String],
+    type: String,
     required: true,
     minlength: 2,
     maxlength: 4,
   },
   price: {
-    type: Number,
+    type: String,
   },
   image:{
     type: String
@@ -46,8 +46,8 @@ export default dishModel;
 const dishValidationSchema = joi.object({
   category: joi.string().required().trim().min(3).max(200),
   title: joi.string().required().trim().min(3).max(200),
-  ingredients: joi.array().items(joi.string()).min(2).max(4).required(),
-  price: joi.number().optional(),
+  ingredients: joi.string().required(),
+  price: joi.string().optional(),
 });
 
 // Function to validate input against the Joi schema

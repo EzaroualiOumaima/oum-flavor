@@ -25,7 +25,7 @@ const reservationSchema = new mongoose.Schema({
         trim: true
     },
     reservationDate: {
-        type: Date,
+        type: String,
         required: true
     },
     reservationTime: {
@@ -52,7 +52,7 @@ const reservationValidationSchema = joi.object({
     name: joi.string().min(5).max(10).required(),
     email: joi.string().email().min(10).max(200).required(),
     phone: joi.string().min(10).max(30).required(),
-    reservationDate: joi.date().required(),
+    reservationDate: joi.string().required(),
     reservationTime: joi.string().required(),
     numberOfPeople: joi.number().integer().min(1).max(10).required(),
     specialRequests: joi.string().min(30).max(255)

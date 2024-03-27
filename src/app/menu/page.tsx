@@ -2,23 +2,24 @@
 
 import bgImg from "@/assets/bgImg.jpg";
 import { useState } from "react";
-
+import tajineImg from "@/assets/tajine.jpg";
+const data = [
+  {
+    image: tajineImg,
+    title: "Tajine",
+    ingredients: ["btata", "jalbana", "maticha"],
+    price: 50,
+  },
+];
 const MenuPage = () => {
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const handleChange = (e: any) => {
-    console.log(e.target.value);
-    setSelectedOption(e.target.value);
-  };
-
   return (
     <div
-      className="flex h-screen gap-7 justify-center items-center text-white bg-cover"
+      className=" gap-7 justify-center items-center text-white bg-cover pt-32"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
       }}
     >
-      <div className="flex flex-col w-full items-center justify-center gap-7">
+      <div className="flex flex-col w-full items-center justify-center gap-7 mb-11">
         <h2 className="font-[JosefinSans] font-semibold italic text-2xl text-[#C9AB81]">
           Special Selection
         </h2>
@@ -32,20 +33,18 @@ const MenuPage = () => {
               name="categories"
               value="Appetizers"
               className="input-radio"
-              onChange={handleChange}
-              checked={selectedOption === "Appetizers"}
+              id="Appetizers"
+              checked
             />
 
-            <label htmlFor="mainDish">Appetizers</label>
+            <label htmlFor="Appetizers">Appetizers</label>
           </li>
           <li className="text-white p-2">
             <input
               type="radio"
               name="categories"
-              value="Main Dish"
+              id="mainDish"
               className="input-radio"
-              onChange={handleChange}
-              checked={selectedOption === "Main Dish"}
             />
             <label htmlFor="mainDish">Main Dish</label>
           </li>
@@ -53,36 +52,41 @@ const MenuPage = () => {
             <input
               type="radio"
               name="categories"
-              value="Desert"
+              id="Desert"
               className="input-radio"
-              onChange={handleChange}
-              checked={selectedOption === "Desert"}
             />
-            <label htmlFor="mainDish">Desert</label>
+            <label htmlFor="Desert">Desert</label>
           </li>
           <li className="text-white p-2">
             <input
               type="radio"
               name="categories"
-              value="Drinks"
+              id="Drinks"
               className="input-radio"
-              onChange={handleChange}
-              checked={selectedOption === "Drinks"}
             />
-            <label htmlFor="mainDish">Drinks</label>
+            <label htmlFor="Drinks">Drinks</label>
           </li>
           <li className="text-white p-2">
             <input
               type="radio"
               name="categories"
-              value="Cocktails"
+              id="Cocktails"
               className="input-radio"
-              onChange={handleChange}
-              checked={selectedOption === "Cocktails"}
             />
-            <label htmlFor="mainDish">Cocktails</label>
+            <label htmlFor="Cocktails">Cocktails</label>
           </li>
         </ul>
+      </div>
+      <div className="flex justify-center">
+        <div className="grid grid-cols-2 w-[80%]">
+          <div className="border border-red-300 p-4">
+            <div className="flex flex-col border border-red-600">
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          <div className="border border-red-600"></div>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,28 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import conatctImg from "@/assets/contact.jpg";
 import bgImg from "@/assets/bgImg.jpg";
+import { sendMail } from "@/actions/mail";
 const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    from: "",
+    name: "",
+    subject: "",
+    body: "",
+  });
+  async function handleSubmit(event: any) {
+    event.preventDefault();
+    console.log(formData);
+    await sendMail(formData);
+    alert("message sent");
+    setFormData({
+      from: "",
+      name: "",
+      subject: "welcome to oum flavor",
+      body: "",
+    });
+  }
   return (
     <>
       <div
@@ -33,13 +54,13 @@ const ContactPage = () => {
               {" "}
               Please email us:{" "}
               <span className="hover:text-[#C9AB81] hover:font-semibold hover:cursor-pointer">
-                oumFlavor@gmail.com
+                oumflavor@gmail.com
               </span>
             </p>
             <p className="contact-p">
               Reserve by email:{" "}
               <span className="hover:text-[#C9AB81] hover:font-semibold hover:cursor-pointer">
-                bookingFlavor@gmail.com
+                oumflavor@gmail.com
               </span>
               <br />
             </p>
@@ -58,17 +79,26 @@ const ContactPage = () => {
             className="h-20 outline-none w-full bg-slate-700 border border-[#C9AB81] pl-5 rounded placeholder:text-slate-400 "
             type="text"
             placeholder="Your Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
           <input
             className="h-20 w-full outline-none border border-[#C9AB81] bg-slate-700 pl-5 rounded placeholder:text-slate-400 "
             type="text"
             placeholder="Your Email"
+            value={formData.from}
+            onChange={(e) => setFormData({ ...formData, from: e.target.value })}
           />
           <textarea
             placeholder="Your Message"
             className="h-24 outline-none w-full border border-[#C9AB81] bg-slate-700 pl-5 pt-3 rounded placeholder:text-slate-400"
+            value={formData.body}
+            onChange={(e) => setFormData({ ...formData, body: e.target.value })}
           ></textarea>
-          <button className="text-xl font-[Poppins] font-semibold text-white bg-[#C9AB81]  border border-[#C9AB81] px-8 py-4 hover:-mt-1 duration-700">
+          <button
+            onClick={handleSubmit}
+            className="text-xl font-[Poppins] font-semibold text-white bg-[#C9AB81]  border border-[#C9AB81] px-8 py-4 hover:-mt-1 duration-700"
+          >
             Send
           </button>
         </form>

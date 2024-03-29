@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import joi from "joi"; 
 
 const contactSchema = new mongoose.Schema({
-    name: {
+    from: {
       type: String,
       required: true,
-      minlength: 5,
+      minlength: 3,
       maxlength: 10
     },
     email: {

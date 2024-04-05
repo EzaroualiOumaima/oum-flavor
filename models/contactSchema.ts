@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import joi from "joi"; 
 
 const contactSchema = new mongoose.Schema({
-    from: {
+    name: {
       type: String,
       required: true,
       minlength: 3,
@@ -11,10 +11,6 @@ const contactSchema = new mongoose.Schema({
     email: {
       type: String,
       required: true,
-    //   validate: {
-    //     validator: (value:any) => joi.string().email({ tlds: { allow: false } }).validate(value).error === null,
-    //     message: "Invalid email format"
-    //   }
     },
     message: {
       type: String,

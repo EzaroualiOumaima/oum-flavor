@@ -4,16 +4,30 @@ import React, { useState } from "react";
 import conatctImg from "@/assets/contact.jpg";
 import bgImg from "@/assets/bgImg.jpg";
 import { sendMail } from "@/actions/mail";
+import { useDispatch, useSelector } from "react-redux";
+import { addContacts } from "@/store/contacts/contactThunk";
+import { AppDispatch, RootState } from "@/store/store";
 const ContactPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const contacts = useSelector((state: RootState) => state.contacts);
   const [formData, setFormData] = useState({
     from: "",
     name: "",
     subject: "",
     body: "",
   });
+
   async function handleSubmit(event: any) {
     event.preventDefault();
-    console.log(formData);
+    console.log("handle Submit Launched");
+    await dispatch(
+      addContacts({
+        name: formData.name,
+        email: formData.from,
+        message: formData.body,
+      })
+    );
+    console.log("sent to db");
     await sendMail(formData);
     alert("message sent");
     setFormData({

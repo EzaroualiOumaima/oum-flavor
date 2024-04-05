@@ -34,7 +34,8 @@ export async function sendMail({
       from: from,
       to :SMTP_EMAIL,
       subject,
-      html: `${body} send by ${from}`,
+      html: `
+      <h1 style="color:red">${body} send by ${from} </h1>`,
     });
     console.log(sendResult);
   } catch (error) {

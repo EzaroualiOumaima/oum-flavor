@@ -1,9 +1,102 @@
 "use client";
 import reservationImg from "@/assets/reservationImg.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import bgImg from "@/assets/bgImg.jpg";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+// import { Reservation } from "../types";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import { addReservations } from "@/store/reservation/reservationThunk";
+
 const Page = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const reservations = useSelector((state: RootState) => state.reservations);
+
   const [minDate, setMinDate] = useState("");
+  const [instructions, setInstructions] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    reservationDate: getCurrentDate(),
+    reservationTime: "11",
+    numberOfPeople: 1,
+    specialRequests: "",
+  });
+
+  console.log(reservations);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setInstructions((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleChangePhone = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = event.target;
+
+    // Validation pour le champ de téléphone
+    if (name === "phone") {
+      // Ne met à jour la valeur que si elle contient au plus 10 chiffres
+      if (/^\d{0,10}$/.test(value)) {
+        setInstructions({ ...instructions, [name]: value });
+      }
+    } else {
+      // Pour les autres champs, met à jour la valeur normalement
+      setInstructions({ ...instructions, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    console.log(instructions);
+    if (
+      instructions.name &&
+      instructions.phone &&
+      instructions.email &&
+      instructions.numberOfPeople !== 0 &&
+      instructions.reservationDate &&
+      instructions.reservationTime
+    ) {
+      console.log("THIS IS THE INSTRUCTIONS: " + instructions);
+      dispatch(
+        addReservations({
+          name: instructions.name,
+          email: instructions.email,
+          phone: instructions.phone,
+          reservationDate: instructions.reservationDate,
+          reservationTime: instructions.reservationTime,
+          numberOfPeople: Number(instructions.numberOfPeople),
+          specialRequests: instructions.specialRequests,
+        })
+      );
+
+      // Resetting the instructions state to clear the input fields
+      setInstructions({
+        name: "",
+        email: "",
+        phone: "",
+        reservationDate: getCurrentDate(),
+        reservationTime: "",
+        numberOfPeople: 1,
+        specialRequests: "",
+      });
+
+      return toast.success("Data Submitted");
+    }
+    return toast.error("Data Failed");
+  };
+
   function getCurrentDate() {
     const date = new Date();
     const year = date.getFullYear();
@@ -14,10 +107,22 @@ const Page = () => {
 
   useEffect(() => {
     setMinDate(getCurrentDate());
-  },[]);
+  }, []);
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div
         className="w-full h-screen flex items-center justify-center bg-cover"
         style={{
@@ -49,107 +154,138 @@ const Page = () => {
             out the form below to reserve a table at OumFlavor
           </p>
         </div>
-        <form className="flex flex-col gap-6 w-full mt-16 px-12">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-6 w-full mt-16 px-12"
+        >
           <div className="grid grid-cols-3 gap-20 ">
-            <select className=" h-[3rem] text-lg  font-[Poppins]  text-white bg-transparent border-0 border-b-2    focus:outline-none focus:border-[#C9AB81] ">
-              <option className="text-slate-900" value="1P">
+            <select
+              name="numberOfPeople"
+              value={instructions.numberOfPeople}
+              onChange={handleChange}
+              className=" h-[3rem] text-lg  font-[Poppins]  text-white bg-transparent border-0 border-b-2    focus:outline-none focus:border-[#C9AB81] "
+            >
+              <option className="text-slate-900" value={1}>
                 1 Person
               </option>
-              <option className="text-slate-900" value="2P">
+              <option className="text-slate-900" value={2}>
                 2 People
               </option>
-              <option className="text-slate-900" value="3P">
+              <option className="text-slate-900" value={3}>
                 3 People
               </option>
-              <option className="text-slate-900" value="4P">
+              <option className="text-slate-900" value={4}>
                 4 People
               </option>
-              <option className="text-slate-900" value="5P">
+              <option className="text-slate-900" value={5}>
                 5 People
               </option>
-              <option className="text-slate-900" value="6P">
+              <option className="text-slate-900" value={6}>
                 6 People
               </option>
-              <option className="text-slate-900" value="7P">
+              <option className="text-slate-900" value={7}>
                 7 People
               </option>
-              <option className="text-slate-900" value="8P">
+              <option className="text-slate-900" value={8}>
                 8 People
               </option>
-              <option className="text-slate-900" value="9P">
+              <option className="text-slate-900" value={9}>
                 9 People
               </option>
-              <option className="text-slate-900" value="10P">
+              <option className="text-slate-900" value={10}>
                 10 People
               </option>
             </select>
             <input
               type="date"
-              value={getCurrentDate()}
+              name="reservationDate"
+              value={
+                instructions.reservationDate
+                  ? instructions.reservationDate
+                  : getCurrentDate()
+              }
+              onChange={handleChange}
               min={minDate}
-              className=" h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white   focus:outline-none  focus:border-[#C9AB81]"
+              className=" h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white  focus:outline-none  focus:border-[#C9AB81]"
             />
-            <select className="  h-[3rem] text-lg font-[Poppins]  text-white bg-transparent border-0 border-b-2 border-gray-100    focus:outline-none focus:border-[#C9AB81]">
+            <select
+              name="reservationTime"
+              value={instructions.reservationTime}
+              onChange={handleChange}
+              className="  h-[3rem] text-lg font-[Poppins]  text-white bg-transparent border-0 border-b-2 border-gray-100    focus:outline-none focus:border-[#C9AB81]"
+            >
               <option className="text-slate-900" value="11">
                 11:00 AM
               </option>
               <option className="text-slate-900" value="12">
                 12:00 AM
               </option>
-              <option className="text-slate-900" value="1">
+              <option className="text-slate-900" value="13">
                 1:00 PM
               </option>
-              <option className="text-slate-900" value="2">
+              <option className="text-slate-900" value="14">
                 2:00 PM
               </option>
-              <option className="text-slate-900" value="3">
+              <option className="text-slate-900" value="15">
                 3:00 PM
               </option>
-              <option className="text-slate-900" value="4">
+              <option className="text-slate-900" value="16">
                 4:00 PM
               </option>
-              <option className="text-slate-900" value="5">
+              <option className="text-slate-900" value="17">
                 5:00 PM
               </option>
-              <option className="text-slate-900" value="6">
+              <option className="text-slate-900" value="18">
                 6:00 PM
               </option>
-              <option className="text-slate-900" value="7">
+              <option className="text-slate-900" value="19">
                 7:00 PM
               </option>
-              <option className="text-slate-900" value="8">
+              <option className="text-slate-900" value="20">
                 8:00 PM
               </option>
-              <option className="text-slate-900" value="9">
+              <option className="text-slate-900" value="21">
                 9:00 PM
               </option>
-              <option className="text-slate-900" value="10">
+              <option className="text-slate-900" value="22">
                 10:00 PM
               </option>
-              <option className="text-slate-900" value="11">
+              <option className="text-slate-900" value="23">
                 11:00 PM
               </option>
-              <option className="text-slate-900" value="12">
+              <option className="text-slate-900" value="00">
                 12:00 PM
               </option>
             </select>
 
             <input
               type="text"
+              name="name"
+              value={instructions.name}
+              onChange={handleChange}
               placeholder="Your Name"
               className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2  focus:outline-none  focus:border-[#C9AB81]"
             />
             <input
-              type="text"
+              type="email"
+              name="email"
+              value={instructions.email}
+              onChange={handleChange}
               placeholder="Email"
               className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2    focus:outline-none  focus:border-[#C9AB81] "
             />
             <input
               type="text"
               placeholder="Phone"
+              name="phone"
+              value={instructions.phone}
+              onChange={handleChangePhone}
               className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100 appearance-none   focus:outline-none  focus:border-[#C9AB81] "
             />
             <textarea
+              name="specialRequests"
+              value={instructions.specialRequests}
+              onChange={handleChange}
               placeholder="Special Requests"
               className=" col-span-3 h-[7rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100  focus:outline-none focus:border-[#C9AB81]"
             />
@@ -159,6 +295,7 @@ const Page = () => {
               BOOK A TABLE NOW
             </button>
           </div>
+          <div>{/* {reservations.error} */}</div>
         </form>
       </div>
     </>

@@ -69,3 +69,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   @apply text-xl leading-10 font-[Poppins]
 }
 
+
+
+label {
+  cursor: pointer;
+  padding: 10px;
+
+}
+.ingredients{
+  font-family: "josefin_sans ";
+}
+
+.no-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.res-buttons{
+  @apply px-2 py-2 rounded duration-500 text-white
+}
+
+.reservation-inputs{
+  @apply h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2  focus:outline-none  focus:border-[#C9AB81]
+}

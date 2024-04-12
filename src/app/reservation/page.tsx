@@ -1,6 +1,132 @@
+"use client";
 import reservationImg from "@/assets/reservationImg.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import bgImg from "@/assets/bgImg.jpg";
-const page = () => {
+import { FormEvent, useEffect, useState } from "react";
+// import { Reservation } from "../types";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import { addReservations } from "@/store/reservation/reservationThunk";
+import checkmark from "@/lotieAnimations/checkmark.json";
+import Lottie from "lottie-react";
+import { addReviews } from "@/store/reviews/reviewThunk";
+
+const ReservationPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const reservations = useSelector((state: RootState) => state.reservations);
+  const reviews = useSelector((state: RootState) => state.reviews);
+
+  const [minDate, setMinDate] = useState("");
+  const [isShown, setIsShown] = useState(false);
+  const [isAlertShown, setIsAlertShown] = useState(false);
+  const [instructions, setInstructions] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    reservationDate: getCurrentDate(),
+    reservationTime: "11",
+    numberOfPeople: 1,
+    specialRequests: "",
+  });
+  const [formdataReview, setFormdataReview] = useState({
+    name: "",
+    message: "",
+  });
+
+  // console.log(reservations);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setInstructions((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleChangePhone = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = event.target;
+
+    // Validation pour le champ de téléphone
+    if (name === "phone") {
+      // Ne met à jour la valeur que si elle contient au plus 10 chiffres
+      if (/^\d{0,10}$/.test(value)) {
+        setInstructions({ ...instructions, [name]: value });
+      }
+    } else {
+      // Pour les autres champs, met à jour la valeur normalement
+      setInstructions({ ...instructions, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    console.log(instructions);
+    if (
+      instructions.name &&
+      instructions.phone &&
+      instructions.email &&
+      instructions.numberOfPeople !== 0 &&
+      instructions.reservationDate &&
+      instructions.reservationTime
+    ) {
+      console.log("THIS IS THE INSTRUCTIONS: " + instructions);
+      dispatch(
+        addReservations({
+          name: instructions.name,
+          email: instructions.email,
+          phone: instructions.phone,
+          reservationDate: instructions.reservationDate,
+          reservationTime: instructions.reservationTime,
+          numberOfPeople: Number(instructions.numberOfPeople),
+          specialRequests: instructions.specialRequests,
+        })
+      );
+
+      // Resetting the instructions state to clear the input fields
+      setInstructions({
+        name: "",
+        email: "",
+        phone: "",
+        reservationDate: getCurrentDate(),
+        reservationTime: "",
+        numberOfPeople: 1,
+        specialRequests: "",
+      });
+
+      return setIsShown(true);
+    }
+    return toast.error("Data Failed");
+  };
+  // add reviews
+  const handleSendFeedback = (e: FormEvent) => {
+    console.log("Send button clicked");
+    e.preventDefault();
+    dispatch(
+      addReviews({
+        name: formdataReview.name,
+        message: formdataReview.message,
+      })
+    );
+
+    setFormdataReview({
+      name: "",
+      message: "",
+    });
+    setIsAlertShown(true);
+    console.log("isAlertShown:", isAlertShown);
+  };
+  // alert("data sent");
+  // console.log(formdataReview);
+
   function getCurrentDate() {
     const date = new Date();
     const year = date.getFullYear();
@@ -8,8 +134,25 @@ const page = () => {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
+
+  useEffect(() => {
+    setMinDate(getCurrentDate());
+  }, []);
+
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div
         className="w-full h-screen flex items-center justify-center bg-cover"
         style={{
@@ -28,10 +171,10 @@ const page = () => {
         }}
       >
         <div className="flex flex-col gap-6 items-center justify-center w-full">
-          <h2 className="font-[JosefinSans] text-xl  text-[#C9AB81]">
-            ONLINE RESERVATION
+          <h2 className="font-[JosefinSans] text-2xl font-semibold italic text-[#C9AB81]">
+            Online Reservation
           </h2>
-          <h1 className=" font-[CormorantGaramond]  text-7xl tracking-wider  ">
+          <h1 className=" font-[CormorantGaramond]   text-7xl tracking-wider  ">
             Book A Table
           </h1>
           <p className="font-[Poppins] text-center text-xl leading-7">
@@ -41,119 +184,253 @@ const page = () => {
             out the form below to reserve a table at OumFlavor
           </p>
         </div>
-        <form className="flex flex-col gap-6 w-full mt-16 px-12">
-          <div className="grid grid-cols-3 gap-20 ">
-            <select className="w-[28rem] h-[3rem] text-lg  font-[Poppins]  text-white bg-transparent border-0 border-b-2    focus:outline-none focus:border-[#C9AB81] ">
-              <option className="text-slate-900" value="1P">
-                1 Person
-              </option>
-              <option className="text-slate-900" value="2P">
-                2 People
-              </option>
-              <option className="text-slate-900" value="3P">
-                3 People
-              </option>
-              <option className="text-slate-900" value="4P">
-                4 People
-              </option>
-              <option className="text-slate-900" value="5P">
-                5 People
-              </option>
-              <option className="text-slate-900" value="6P">
-                6 People
-              </option>
-              <option className="text-slate-900" value="7P">
-                7 People
-              </option>
-              <option className="text-slate-900" value="8P">
-                8 People
-              </option>
-              <option className="text-slate-900" value="9P">
-                9 People
-              </option>
-              <option className="text-slate-900" value="10P">
-                10 People
-              </option>
-            </select>
-            <input
-              type="date"
-              value={getCurrentDate()}
-              className="w-[28rem] h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white   focus:outline-none  focus:border-[#C9AB81]"
-            />
-            <select className=" w-[28rem] h-[3rem] text-lg font-[Poppins]  text-white bg-transparent border-0 border-b-2 border-gray-100    focus:outline-none focus:border-[#C9AB81]">
-              <option className="text-slate-900" value="11">
-                11:00 AM
-              </option>
-              <option className="text-slate-900" value="12">
-                12:00 AM
-              </option>
-              <option className="text-slate-900" value="1">
-                1:00 PM
-              </option>
-              <option className="text-slate-900" value="2">
-                2:00 PM
-              </option>
-              <option className="text-slate-900" value="3">
-                3:00 PM
-              </option>
-              <option className="text-slate-900" value="4">
-                4:00 PM
-              </option>
-              <option className="text-slate-900" value="5">
-                5:00 PM
-              </option>
-              <option className="text-slate-900" value="6">
-                6:00 PM
-              </option>
-              <option className="text-slate-900" value="7">
-                7:00 PM
-              </option>
-              <option className="text-slate-900" value="8">
-                8:00 PM
-              </option>
-              <option className="text-slate-900" value="9">
-                9:00 PM
-              </option>
-              <option className="text-slate-900" value="10">
-                10:00 PM
-              </option>
-              <option className="text-slate-900" value="11">
-                11:00 PM
-              </option>
-              <option className="text-slate-900" value="12">
-                12:00 PM
-              </option>
-            </select>
 
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-[28rem] h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2  focus:outline-none  focus:border-[#C9AB81]"
-            />
-            <input
-              type="text"
-              placeholder="Email"
-              className="w-[28rem] h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2    focus:outline-none  focus:border-[#C9AB81] "
-            />
-            <input
-              type="text"
-              placeholder="Phone"
-              className="w-[28rem] h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100 appearance-none   focus:outline-none  focus:border-[#C9AB81] "
-            />
-            <textarea
-              placeholder="Special Requests"
-              className=" col-span-3 h-[7rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100  focus:outline-none focus:border-[#C9AB81]"
-            />
-          </div>
-          <div className="w-full justify-center flex mt-5">
-            <button className="text-lg  font-[Poppins] font-semibold text-white  bg-[#C9AB81] border border-[#C9AB81] px-6 py-3 hover:-mt-1 duration-700">
-              BOOK A TABLE NOW
-            </button>
-          </div>
+        <form
+          onSubmit={handleSubmit}
+          className={`flex flex-col gap-6 ${
+            isShown ? "w-[85%]" : "w-full"
+          } mt-16 px-12`}
+        >
+          {isShown ? (
+            <div className="w-full py-4 flex items-center justify-center gap-20  ">
+              <div className="flex flex-col gap-5 pt-7">
+                <h1 className="font-[CormorantGaramond]  text-5xl tracking-wider text-gray-100 leading-[5rem]  text-center ">
+                  Thank you for your reservation, <br />
+                  we&apos;ll contact you soon !
+                </h1>
+                <div className="w-full flex items-center justify-center">
+                  <Lottie
+                    animationData={checkmark}
+                    className="h-[5rem] w-[5rem] "
+                    loop={false}
+                  />
+                </div>
+              </div>
+              <form className="max-w-xl mx-auto mt-16 flex w-full flex-col border rounded-lg p-6">
+                <h2 className=" mb-3 font-[CormorantGaramond]  text-2xl text-center  text-white">
+                  Your Feedback
+                </h2>
+                <p className="mb-4 leading-relaxed text-gray-300 ">
+                  If you had any issues or you liked our service, please share
+                  with us!
+                </p>
+                <div className="mb-4">
+                  <label
+                    htmlFor="name"
+                    className="text-sm leading-7 text-white"
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="text"
+                    name="text"
+                    value={formdataReview.name}
+                    onChange={(e) =>
+                      setFormdataReview({
+                        ...formdataReview,
+                        name: e.target.value,
+                      })
+                    }
+                    className="w-full rounded border  py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-[#C9AB81] focus:ring-1 focus:ring-[#bdbab6]"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="message"
+                    className="text-sm leading-7 text-white"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formdataReview.message}
+                    onChange={(e) =>
+                      setFormdataReview({
+                        ...formdataReview,
+                        message: e.target.value,
+                      })
+                    }
+                    className="h-24 w-full resize-none rounded border border-gray-300 bg-white py-1 px-3 text-base leading-6 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-[#C9AB81] focus:ring-1 focus:ring-[#bdbab6]"
+                  ></textarea>
+                </div>
+                <button
+                  onClick={handleSendFeedback}
+                  className="rounded border-0 bg-[#C9AB81] py-2 px-6 text-lg text-white hover:bg-[#d6b27f] focus:outline-none"
+                >
+                  Send
+                </button>
+                <p className="mt-4 text-xs text-gray-400 text-center">
+                  Feel free to connect with us on social media platforms.
+                </p>
+              </form>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-3 gap-20 ">
+                <select
+                  name="numberOfPeople"
+                  value={instructions.numberOfPeople}
+                  onChange={handleChange}
+                  className=" h-[3rem] text-lg  font-[Poppins]  text-white bg-transparent border-0 border-b-2 focus:outline-none focus:border-[#C9AB81] "
+                >
+                  <option className="text-slate-900" value={1}>
+                    1 Person
+                  </option>
+                  <option className="text-slate-900" value={2}>
+                    2 People
+                  </option>
+                  <option className="text-slate-900" value={3}>
+                    3 People
+                  </option>
+                  <option className="text-slate-900" value={4}>
+                    4 People
+                  </option>
+                  <option className="text-slate-900" value={5}>
+                    5 People
+                  </option>
+                  <option className="text-slate-900" value={6}>
+                    6 People
+                  </option>
+                  <option className="text-slate-900" value={7}>
+                    7 People
+                  </option>
+                  <option className="text-slate-900" value={8}>
+                    8 People
+                  </option>
+                  <option className="text-slate-900" value={9}>
+                    9 People
+                  </option>
+                  <option className="text-slate-900" value={10}>
+                    10 People
+                  </option>
+                </select>
+                <input
+                  type="date"
+                  name="reservationDate"
+                  value={
+                    instructions.reservationDate
+                      ? instructions.reservationDate
+                      : getCurrentDate()
+                  }
+                  onChange={handleChange}
+                  min={minDate}
+                  className=" h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white  focus:outline-none  focus:border-[#C9AB81]"
+                />
+                <select
+                  name="reservationTime"
+                  value={instructions.reservationTime}
+                  onChange={handleChange}
+                  className="  h-[3rem] text-lg font-[Poppins]  text-white bg-transparent border-0 border-b-2 border-gray-100    focus:outline-none focus:border-[#C9AB81]"
+                >
+                  <option className="text-slate-900" value="11">
+                    11:00 AM
+                  </option>
+                  <option className="text-slate-900" value="12">
+                    12:00 AM
+                  </option>
+                  <option className="text-slate-900" value="13">
+                    1:00 PM
+                  </option>
+                  <option className="text-slate-900" value="14">
+                    2:00 PM
+                  </option>
+                  <option className="text-slate-900" value="15">
+                    3:00 PM
+                  </option>
+                  <option className="text-slate-900" value="16">
+                    4:00 PM
+                  </option>
+                  <option className="text-slate-900" value="17">
+                    5:00 PM
+                  </option>
+                  <option className="text-slate-900" value="18">
+                    6:00 PM
+                  </option>
+                  <option className="text-slate-900" value="19">
+                    7:00 PM
+                  </option>
+                  <option className="text-slate-900" value="20">
+                    8:00 PM
+                  </option>
+                  <option className="text-slate-900" value="21">
+                    9:00 PM
+                  </option>
+                  <option className="text-slate-900" value="22">
+                    10:00 PM
+                  </option>
+                  <option className="text-slate-900" value="23">
+                    11:00 PM
+                  </option>
+                  <option className="text-slate-900" value="00">
+                    12:00 PM
+                  </option>
+                </select>
+
+                <input
+                  type="text"
+                  name="name"
+                  value={instructions.name}
+                  onChange={handleChange}
+                  placeholder="Your Name"
+                  className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2  focus:outline-none  focus:border-[#C9AB81]"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  value={instructions.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2    focus:outline-none  focus:border-[#C9AB81] "
+                />
+                <input
+                  type="text"
+                  placeholder="Phone"
+                  name="phone"
+                  value={instructions.phone}
+                  onChange={handleChangePhone}
+                  className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100 appearance-none   focus:outline-none  focus:border-[#C9AB81] "
+                />
+                <textarea
+                  name="specialRequests"
+                  value={instructions.specialRequests}
+                  onChange={handleChange}
+                  placeholder="Special Requests"
+                  className=" col-span-3 h-[7rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100  focus:outline-none focus:border-[#C9AB81]"
+                />
+              </div>
+              <div className="w-full justify-center flex mt-5 ">
+                <button className="text-lg  font-[Poppins] font-semibold text-white  bg-[#C9AB81] border border-[#C9AB81] px-6 py-3 hover:bg-[#b49365]   hover:scale-110 duration-500 rounded-sm ">
+                  BOOK A TABLE NOW
+                </button>
+              </div>
+            </>
+          )}
         </form>
       </div>
+      {isAlertShown && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-900 bg-opacity-80">
+          <div className=" p-8 rounded-lg flex  bg-gray-800 flex-col gap-3 justify-center items-center w-96">
+            <Lottie
+              animationData={checkmark}
+              className="h-[4rem] w-[4rem] "
+              loop={false}
+            />
+            <p className="text-lg text-center  text-white">
+              Feedback sent successfully!
+            </p>
+            <button
+              className=" w-full mt-4 px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+              onClick={() => setIsAlertShown(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
-export default page;
+export default ReservationPage;

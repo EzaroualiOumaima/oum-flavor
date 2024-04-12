@@ -5,10 +5,11 @@ import {
   getContacts,
   upadateContacts,
 } from "./contactThunk";
+import { Contact } from "@/app/types";
 
 type CustomInitialState = {
   loading: boolean;
-  contacts: []; // Change 'null' to 'any' for flexibility in typing
+  contacts: Contact[]; // Change 'null' to 'any' for flexibility in typing
   error: unknown; // Change 'null' to 'string' to match the potential error value type
 };
 

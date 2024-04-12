@@ -13,17 +13,18 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Dish } from "@/app/types";
 
-interface Dish {
-  title: string;
-  category: string;
-  ingredients: string;
-  price: number;
-}
+// interface Dish {
+//   title: string;
+//   category: string;
+//   ingredients: string;
+//   price: number;
+// }
 
 const MenuPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { dishes }: Dish[] = useSelector((state: RootState) => state.dishes);
+  const {dishes}  = useSelector((state: RootState) => state.dishes);
   const [id, setId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
   const [category, setCategory] = useState("");
@@ -82,7 +83,7 @@ const MenuPage = () => {
   useEffect(() => {
     setFilteredDishes(
       dishes.filter(
-        (item: Dish) =>
+        (item:Dish ) =>
           item.category.toLowerCase() ===
           (category.length > 0 ? category.toLowerCase() : "appetizers")
       )
@@ -200,8 +201,8 @@ const MenuPage = () => {
             {filteredDishes
               .slice()
               .reverse()
-              .map((dish: any) => (
-                <tr key={dish.id}>
+              .map((dish: Dish) => (
+                <tr key={dish._id}>
                   <td className="px-6 py-4 whitespace-nowrap">{dish.title}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {dish.ingredients}

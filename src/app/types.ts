@@ -1,19 +1,32 @@
-// export interface Reservation {
-//     name: string;
-//     email: string;
-//     phone: string;
-//     reservationDate: string;
-//     reservationTime: string;
-//     numberOfPeople: number;
-//     specialRequests: string;
-//   }
+export interface Reservation {
+ _id:string
+    name: string;
+    email: string;
+    phone: string;
+    reservationDate: string;
+    reservationTime: string;
+    numberOfPeople: number;
+    specialRequests: string;
+  }
 
-// types.ts
+export interface Contact {
+  _id: string
+  name : string,
+  email: string,
+  message : string
+}
+
+export interface Review {
+  _id:string
+  name : string,
+  message : string,
+  isShown :boolean
+}
 
 // Define a type for the dish
 export interface Dish {
-    id: string;
-    name: string;
+    _id: string;
+    title: string;
     category: string;
     ingredients: string;
     price: number;

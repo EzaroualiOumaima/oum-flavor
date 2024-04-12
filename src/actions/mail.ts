@@ -34,7 +34,27 @@ export async function sendMail({
       from: from,
       to :SMTP_EMAIL,
       subject,
-      html: `${body} send by ${from}`,
+      html: `
+      <div
+                style="
+                  max-width: 600px;
+                  margin: 0 auto;
+                  padding: 20px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                  font-family: Arial, sans-serif;
+                "
+              >
+              <h2 style=" font-weight: 800; font-size: 30px;">Contact:</h2>
+                <div class="details" style="margin-top: 20px">
+                  <p style="font-weight: 600">
+                    <strong style="color: red">From:</strong> ${name}
+                  </p>
+                  <p style="font-weight: 600" ><strong style="color: red">Tel:</strong> ${body}</p>
+                </div>
+              </div>
+      
+      `,
     });
     console.log(sendResult);
   } catch (error) {

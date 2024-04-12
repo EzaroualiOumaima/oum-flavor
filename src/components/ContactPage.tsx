@@ -68,7 +68,7 @@ const ContactPage = () => {
             placeholder="Your Message"
             className="h-24 outline-none w-full border border-[#C9AB81] bg-slate-700 pl-5 pt-3 rounded placeholder:text-slate-400"
           ></textarea>
-          <button className="text-xl font-[Poppins] font-semibold text-white bg-[#C9AB81]  border border-[#C9AB81] px-8 py-4 hover:-mt-1 duration-700">
+          <button className="text-xl font-[Poppins] font-semibold text-white bg-[#C9AB81]  border border-[#C9AB81] px-8 py-4 hover:scale-110 duration-500">
             Send
           </button>
         </form>

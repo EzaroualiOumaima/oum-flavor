@@ -5,8 +5,8 @@ const reservationSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        minlength: 5,
-        maxlength: 10,
+        minlength: 3,
+        maxlength: 20,
 
     },
     email: {
@@ -40,8 +40,7 @@ const reservationSchema = new mongoose.Schema({
     },
     specialRequests: {
         type: String,
-        minlength: 30,
-        maxlength: 255
+     
     }
 });
 
@@ -49,13 +48,13 @@ const reservationModel = mongoose.models.Reservations || mongoose.model("Reserva
 export default reservationModel;
 
 const reservationValidationSchema = joi.object({
-    name: joi.string().min(5).max(10).required(),
+    name: joi.string().min(3).max(20).required(),
     email: joi.string().email().min(10).max(200).required(),
     phone: joi.string().min(10).max(30).required(),
     reservationDate: joi.string().required(),
     reservationTime: joi.string().required(),
     numberOfPeople: joi.number().integer().min(1).max(10).required(),
-    specialRequests: joi.string().min(30).max(255)
+    specialRequests: joi.string()
 });
 
 export { reservationValidationSchema };

@@ -5,10 +5,11 @@ import {
   getReservations,
   updateReservations,
 } from "./reservationThunk";
+import { Reservation } from "@/app/types";
 
 type CustomInitialState = {
   loading: boolean;
-  reservations: []; // Change 'null' to 'any' for flexibility in typing
+  reservations: Reservation[]; // Change 'null' to 'any' for flexibility in typing
   error: unknown; // Change 'null' to 'string' to match the potential error value type
 };
 

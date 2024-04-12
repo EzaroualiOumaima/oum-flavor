@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addDishes, deleteDishes, getAllDishes, updateDishes } from "./dishThunk";
-import { Dish } from "../../../models/dishSchema";
-
+// import { Dish } from "../../../models/dishSchema";
+import { Dish } from "@/app/types";
 type CustomInitialState ={
     loading: boolean;
-    dishes: Dish[] // Change 'null' to 'any' for flexibility in typing
+    dishes:Dish[] // Change 'null' to 'any' for flexibility in typing
     error: unknown ; 
   }
   
@@ -15,7 +15,7 @@ const initialState : CustomInitialState = {
 
 }
 
-const dishSlice :any= createSlice({
+const dishSlice = createSlice({
     name :"dishes",
     initialState ,
     reducers :{

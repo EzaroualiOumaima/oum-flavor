@@ -9,6 +9,7 @@ import bgImg from "@/assets/bgImg.jpg";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Contact } from "@/app/types";
 
 const MessagePage = () => {
   const [id, setId] = useState("");
@@ -90,7 +91,7 @@ const MessagePage = () => {
               </tr>
             </thead>
             <tbody className="overflow-y-auto">
-              {contacts.map((contact: any, index: number) => (
+              {contacts.map((contact: Contact, index: number) => (
                 <tr key={index} className=" border-b">
                   <td className="px-6 py-4 font-Poppins font-md text-white">
                     <h1 className="w-[250px] whitespace-nowrap overflow-hidden text-ellipsis text-[15px]">

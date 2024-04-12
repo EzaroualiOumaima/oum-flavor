@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { IoMdCheckmark } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Review } from "@/app/types";
 
 const ReviewPage = () => {
   const { reviews } = useSelector((state: RootState) => state.reviews);
@@ -100,7 +101,7 @@ const ReviewPage = () => {
               </tr>
             </thead>
             <tbody className="overflow-y-auto">
-              {reviews.map((review: any, index: number) => (
+              {reviews.map((review: Review, index: number) => (
                 <tr key={index} className=" border-b">
                   <td className="px-6 py-4 font-Poppins font-md text-white">
                     <h1 className="w-[150px] whitespace-nowrap overflow-hidden text-ellipsis text-[15px]">

@@ -1,6 +1,7 @@
-import dishModel, { Dish } from "../../../../models/dishSchema";
 import connectMongoDB from "../../../../libs/connectionDb";
 import { NextRequest, NextResponse } from "next/server";
+import dishModel from "../../../../models/dishSchema";
+import { Dish } from "@/app/types";
 
 export const GET = async (request: NextRequest) => {
     await connectMongoDB()

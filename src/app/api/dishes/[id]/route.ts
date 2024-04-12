@@ -1,5 +1,5 @@
 import connectMongoDB from "../../../../../libs/connectionDb";
-import dishModel from "../../../../../models/dishSchema";
+import dishModel  from "../../../../../models/dishSchema";
 
 import { NextResponse, NextRequest } from "next/server";
 

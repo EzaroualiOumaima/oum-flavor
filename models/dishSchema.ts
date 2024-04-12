@@ -1,12 +1,7 @@
 import mongoose from "mongoose";
 import joi from "joi";
 
-// export type Dish = {
-//   category: string;
-//   title: string;
-//   ingredients: string;
-//   price: number;
-// };
+
 
 const dishSchema = new mongoose.Schema({
   category: {
@@ -49,9 +44,4 @@ const dishValidationSchema = joi.object({
   price: joi.number().optional(),
 });
 
-// Function to validate input against the Joi schema
-// function validateDish(dish: Dish) {
-//   return dishValidationSchema.validate(dish);
-// }
 
-// export { validateDish };

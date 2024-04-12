@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addReviews, deleteReviews, getReviews, updateReviews } from "./reviewThunk";
+import { Review } from "@/app/types";
 
 type CustomInitialState = {
     loading: boolean;
-    reviews: []; 
+    reviews:Review []; 
     error: unknown; 
   };
   

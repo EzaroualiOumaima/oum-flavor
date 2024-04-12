@@ -9,7 +9,7 @@ import { getAllDishes } from "@/store/dishes/dishThunk";
 
 const MenuPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { dishes }: Dish[] = useSelector((state: RootState) => state.dishes);
+  const { dishes } = useSelector((state: RootState) => state.dishes);
   const [filteredDishes, setFilteredDishes] = useState(dishes);
   const [index, setIndex] = useState(1);
 
@@ -100,12 +100,13 @@ const MenuPage = () => {
             >
               Cocktails
             </button>
+            
           </li>
         </ul>
       </div>
       <div className="flex justify-center">
         <div className="grid grid-cols-2 gap-5 w-[80%] mb-24">
-          {filteredDishes.map((dish: any, index: number) => (
+          {filteredDishes.map((dish: Dish, index: number) => (
             <>
               <div key={index} className="p-4">
                 <div className="flex flex-col">

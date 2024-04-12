@@ -15,6 +15,7 @@ import {
   updateReservations,
 } from "@/store/reservation/reservationThunk";
 import { motion } from "framer-motion";
+import { Reservation } from "@/app/types";
 
 const PageReservation = () => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -150,7 +151,7 @@ const PageReservation = () => {
             </tr>
           </thead>
           <tbody className="overflow-y-auto text-[14px] font-Poppins text-white">
-            {reservations.map((reservation: any, index: number) => (
+            {reservations.map((reservation: Reservation, index: number) => (
               <tr
                 key={index}
                 className={`${

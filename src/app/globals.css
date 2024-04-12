@@ -76,6 +76,14 @@ label {
   padding: 10px;
 
 }
+.ingredients{
+  font-family: "josefin_sans ";
+}
+
+.no-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
 .res-buttons{
   @apply px-2 py-2 rounded duration-500 text-white
 }

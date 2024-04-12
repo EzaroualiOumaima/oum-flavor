@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdEditSquare } from "react-icons/md";
 import bgImg from "@/assets/bgImg.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   getReservations,
@@ -19,7 +21,7 @@ const PageReservation = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [id, setId] = useState("");
   const [formData, setFormData] = useState({
-   id: "",
+    id: "",
     numberOfPeople: 1,
     reservationTime: "",
     reservationDate: "",
@@ -44,6 +46,7 @@ const PageReservation = () => {
       await dispatch(updateReservations(formData));
       dispatch(getReservations());
       setOpenUpdate(false);
+      toast.success("Reservation Updated");
     } catch (error) {
       console.error("Error updating reservation:", error);
     }
@@ -66,6 +69,7 @@ const PageReservation = () => {
       await dispatch(deleteReservations(id));
       await dispatch(getReservations());
       setOpenDelete(false);
+      toast.success("Reservation Deleted");
     } catch (error) {
       console.error("Error deleting reservation:", error);
     }
@@ -73,8 +77,20 @@ const PageReservation = () => {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div
-        className=" w-full overflow-x-hidden overflow-y-auto h-screen bg-cover"
+        className=" w-full  overflow-y-auto  no-scroll-bar h-screen bg-cover"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
         }}
@@ -162,7 +178,7 @@ const PageReservation = () => {
                   {reservation.numberOfPeople}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap  ">
-                  <h1 className="w-32 overflow-hidden text-ellipsis">
+                  <h1 className="w-32 overflow-hidden text-wrap ">
                     {reservation.specialRequests}
                   </h1>
                 </td>
@@ -226,13 +242,13 @@ const PageReservation = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: "0.5" }}
-              className="bg-gray-800 w-[30rem] p-6 rounded-md flex flex-col gap-5 text-white"
+              className="bg-gray-900 w-[30rem] p-6 rounded-md flex flex-col gap-5 text-white"
             >
               <div className="flex flex-col gap-1">
                 <label htmlFor="">Reservation Date</label>
                 <input
                   type="date"
-                  className="w-full bg-gray-700 rounded-md border-gray-700 text-white px-2 py-3"
+                  className="w-full bg-gray-900 rounded-md border-gray-900 text-white px-2 py-3"
                   value={formData.reservationDate}
                   onChange={(e) =>
                     setFormData({
@@ -300,7 +316,7 @@ const PageReservation = () => {
                   }
                   className="h-[3rem] text-lg font-[Poppins] text-white bg-transparent border-0 border-b-2 border-gray-100 focus:outline-none focus:border-[#C9AB81]"
                 >
-                  {[...Array(12)].map((_, index) => {
+                  {/* {[...Array(12)].map((_, index) => {
                     const hour = index === 0 ? 12 : index;
                     const amPm = index < 12 ? "AM" : "PM";
                     const value = index.toString().padStart(2, "0");
@@ -313,13 +329,28 @@ const PageReservation = () => {
                         {hour}:{index === 0 ? "00" : "00"} {amPm}
                       </option>
                     );
+                  })} */}
+                  {[...Array(13)].map((_, index) => {
+                    const hour = index + 11 <= 12 ? index + 11 : index - 1;
+                    const amPm = index < 12 ? "AM" : "PM";
+                    const value = hour.toString().padStart(2, "0");
+                    return (
+                      <option
+                        key={index}
+                        className="text-slate-900"
+                        value={value}
+                      >
+                        {hour === 0 ? 12 : hour}:{index === 0 ? "00" : "00"}{" "}
+                        {amPm}
+                      </option>
+                    );
                   })}
                 </select>
               </div>
 
               <div className="flex gap-4 items-center justify-center">
                 <button
-                  className="px-4 py-2 bg-[#ff9a00] text-white rounded-md hover:scale-110 duration-500"
+                  className="px-4 py-2 bg-[#2de000] text-white rounded-md hover:scale-110 duration-500"
                   onClick={() => handleUpdate()}
                 >
                   Edit

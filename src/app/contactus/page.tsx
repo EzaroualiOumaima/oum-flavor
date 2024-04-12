@@ -19,24 +19,35 @@ const ContactPage = () => {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
-    console.log("handle Submit Launched");
-    await dispatch(
-      addContacts({
-        name: formData.name,
-        email: formData.from,
-        message: formData.body,
-      })
-    );
-    console.log("sent to db");
-    await sendMail(formData);
-    alert("message sent");
-    setFormData({
-      from: "",
-      name: "",
-      subject: "welcome to oum flavor",
-      body: "",
-    });
+    const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+    if (
+      formData.name &&
+      formData.body &&
+      formData.from &&
+      emailRegex.test(formData.from)
+    ) {
+      await dispatch(
+        addContacts({
+          name: formData.name,
+          email: formData.from,
+          message: formData.body,
+        })
+      );
+      console.log("sent to db");
+      await sendMail(formData);
+      alert("message sent");
+      setFormData({
+        from: "",
+        name: "",
+        subject: "welcome to oum flavor",
+        body: "",
+      });
+    } else {
+      return alert("please complete the form");
+    }
+    // console.log("handle Submit Launched");
   }
+
   return (
     <>
       <div
@@ -111,7 +122,7 @@ const ContactPage = () => {
           ></textarea>
           <button
             onClick={handleSubmit}
-            className="text-xl font-[Poppins] font-semibold text-white bg-[#C9AB81]  border border-[#C9AB81] px-8 py-4 hover:-mt-1 duration-700"
+            className="text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500"
           >
             Send
           </button>

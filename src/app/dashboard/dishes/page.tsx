@@ -1,5 +1,4 @@
 "use client";
-import Sidebar from "@/components/Sidebar";
 import {
   deleteDishes,
   getAllDishes,
@@ -12,6 +11,8 @@ import bgImg from "@/assets/bgImg.jpg";
 import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { motion } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Dish {
   title: string;
@@ -25,6 +26,7 @@ const MenuPage = () => {
   const { dishes }: Dish[] = useSelector((state: RootState) => state.dishes);
   const [id, setId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
+  const [category, setCategory] = useState("");
   const [openUpdate, setOpenUpdate] = useState(false);
   const [formData, setFormData] = useState({
     id: "",
@@ -34,7 +36,6 @@ const MenuPage = () => {
   });
 
   const [filteredDishes, setFilteredDishes] = useState(dishes);
-  // const [selectedCategory, setSelectedCategory] = useState<string>("Dessert");
   const [index, setIndex] = useState(1);
 
   const deleteModel = (id: string) => {
@@ -55,10 +56,11 @@ const MenuPage = () => {
   const handleUpdate = async () => {
     try {
       await dispatch(updateDishes(formData));
-      dispatch(getAllDishes());
+      await dispatch(getAllDishes());
       setOpenUpdate(false);
+      toast.success("Dish updated");
     } catch (error) {
-      console.error("Error updating dihes:", error);
+      console.error("Error updating dishes:", error);
     }
   };
 
@@ -67,6 +69,7 @@ const MenuPage = () => {
       await dispatch(deleteDishes(id));
       await dispatch(getAllDishes());
       setOpenDelete(false);
+      toast.success("Dish deleted");
     } catch (error) {
       console.error("Error deleting dishes:", error);
     }
@@ -79,27 +82,34 @@ const MenuPage = () => {
   useEffect(() => {
     setFilteredDishes(
       dishes.filter(
-        (item: Dish) => item.category.toLocaleLowerCase() === "appetizers"
-      )
-    );
-  }, [dishes]);
-
-  const handleCategoryChange = (category: string, index: number) => {
-    setIndex(index);
-    console.log("function launched");
-    setFilteredDishes(
-      dishes.filter(
         (item: Dish) =>
-          item.category.toLocaleLowerCase() === category.toLowerCase()
+          item.category.toLowerCase() ===
+          (category.length > 0 ? category.toLowerCase() : "appetizers")
       )
     );
-    console.log(filteredDishes);
+  }, [category, dishes]);
+
+  const handleChange = (param: string, index: number) => {
+    setIndex(index);
+    setCategory(param);
   };
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div
-        className="flex flex-col gap-10 w-full bg-cover"
+        className="flex flex-col gap-10 w-full bg-cover overflow-y-auto  no-scroll-bar h-screen "
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
         }}
@@ -110,7 +120,7 @@ const MenuPage = () => {
               className={`res-buttons  ${
                 index === 1 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
-              onClick={() => handleCategoryChange("Appetizers", 1)}
+              onClick={() => handleChange("Appetizers", 1)}
             >
               Appetizers
             </button>
@@ -120,7 +130,7 @@ const MenuPage = () => {
               className={` res-buttons ${
                 index === 2 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
-              onClick={() => handleCategoryChange("Main Dish", 2)}
+              onClick={() => handleChange("Main Dish", 2)}
             >
               Main Dish
             </button>
@@ -130,7 +140,7 @@ const MenuPage = () => {
               className={`res-buttons ${
                 index === 3 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
-              onClick={() => handleCategoryChange("Dessert", 3)}
+              onClick={() => handleChange("Dessert", 3)}
             >
               Dessert
             </button>
@@ -140,7 +150,7 @@ const MenuPage = () => {
               className={`res-buttons ${
                 index === 4 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
-              onClick={() => handleCategoryChange("Drinks", 4)}
+              onClick={() => handleChange("Drinks", 4)}
             >
               Drinks
             </button>
@@ -150,7 +160,7 @@ const MenuPage = () => {
               className={`res-buttons  ${
                 index === 5 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
-              onClick={() => handleCategoryChange("Cocktails", 5)}
+              onClick={() => handleChange("Cocktails", 5)}
             >
               Cocktails
             </button>
@@ -187,30 +197,33 @@ const MenuPage = () => {
             </tr>
           </thead>
           <tbody className=" divide-y divide-gray-200 text-white">
-            {filteredDishes.map((dish: any) => (
-              <tr key={dish.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{dish.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {dish.ingredients}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {dish.price} Dhs
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex gap-3">
-                    <MdEditSquare
-                      onClick={() => updateModel(dish)}
-                      className="cursor-pointer h-6 w-6 text-blue-600"
-                    />
+            {filteredDishes
+              .slice()
+              .reverse()
+              .map((dish: any) => (
+                <tr key={dish.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{dish.title}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dish.ingredients}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dish.price} Dhs
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex gap-3">
+                      <MdEditSquare
+                        onClick={() => updateModel(dish)}
+                        className="cursor-pointer h-6 w-6 text-blue-600"
+                      />
 
-                    <RiDeleteBin6Line
-                      onClick={() => deleteModel(dish._id)}
-                      className="h-6 w-6 cursor-pointer text-red-600"
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                      <RiDeleteBin6Line
+                        onClick={() => deleteModel(dish._id)}
+                        className="h-6 w-6 cursor-pointer text-red-600"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -225,7 +238,7 @@ const MenuPage = () => {
               className="p-6 flex flex-col items-center justify-center rounded-lg bg-gray-900 px-6 gap-5"
             >
               <h1 className="text-lg text-white">
-                Confirm the deletion of this reservation?
+                Confirm the deletion of this dish?
               </h1>
               <div className="flex gap-4 items-center">
                 <button
@@ -256,7 +269,7 @@ const MenuPage = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: "0.5" }}
-              className="bg-gray-800 w-[30rem] p-6 rounded-md flex flex-col gap-5 text-white"
+              className="bg-gray-900 w-[30rem] p-6 rounded-md flex flex-col gap-5 text-white"
             >
               <div className="flex flex-col gap-1">
                 <label htmlFor="">Title</label>
@@ -276,7 +289,7 @@ const MenuPage = () => {
                 <label htmlFor="">Ingredients</label>
                 <input
                   type="text"
-                  className="w-full bg-gray-700 rounded-md border-gray-700 text-white px-2 py-3"
+                  className="w-full bg-gray-800 rounded-md border-gray-800 text-white px-2 py-3"
                   value={formData.ingredients}
                   onChange={(e) =>
                     setFormData({
@@ -290,7 +303,7 @@ const MenuPage = () => {
                 <label htmlFor="">Reservation Time</label>
                 <input
                   type="number"
-                  className="w-full bg-gray-700 rounded-md border-gray-700 text-white px-2 py-3"
+                  className="w-full bg-gray-800 rounded-md border-gray-800 text-white px-2 py-3"
                   value={formData.price}
                   onChange={(e) =>
                     setFormData({
@@ -303,7 +316,7 @@ const MenuPage = () => {
 
               <div className="flex gap-4 items-center justify-center">
                 <button
-                  className="px-4 py-2 bg-[#ff9a00] text-white rounded-md hover:scale-110 duration-500"
+                  className="px-4 py-2 bg-[#2de000] text-white rounded-md hover:scale-110 duration-500"
                   onClick={() => handleUpdate()}
                 >
                   Edit

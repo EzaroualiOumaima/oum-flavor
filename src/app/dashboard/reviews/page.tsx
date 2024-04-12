@@ -1,19 +1,23 @@
 "use client";
-
-import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteContacts, getContacts } from "@/store/contacts/contactThunk";
 import bgImg from "@/assets/bgImg.jpg";
+import {
+  deleteReviews,
+  getReviews,
+  updateReviews,
+} from "@/store/reviews/reviewThunk";
+import { AppDispatch, RootState } from "@/store/store";
+import { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { IoMdCheckmark } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const MessagePage = () => {
+const ReviewPage = () => {
+  const { reviews } = useSelector((state: RootState) => state.reviews);
   const [id, setId] = useState("");
   const dispatch = useDispatch<AppDispatch>();
-  const { contacts } = useSelector((state: RootState) => state.contacts);
   const [openDelete, setOpenDelete] = useState(false);
 
   const deleteModel = (id: string) => {
@@ -22,20 +26,30 @@ const MessagePage = () => {
   };
 
   useEffect(() => {
-    const getAllContacts = async () => {
-      await dispatch(getContacts());
+    const getAllReviews = async () => {
+      await dispatch(getReviews());
     };
-    getAllContacts();
+    getAllReviews();
   }, [dispatch]);
 
   const handleDelete = async (id: string) => {
     try {
-      await dispatch(deleteContacts(id));
-      await dispatch(getContacts());
+      await dispatch(deleteReviews(id));
+      await dispatch(getReviews());
+      toast.success("Review Deleted");
       setOpenDelete(false);
-      toast.success("Contact Deleted");
     } catch (error) {
-      console.error("Error deleting contact:", error);
+      console.error("Error deleting review:", error);
+    }
+  };
+
+  const handleUpdate = async (id: string) => {
+    try {
+      await dispatch(updateReviews(id));
+      await dispatch(getReviews());
+      toast.success("Review is showing");
+    } catch (error) {
+      console.error("Error deleting review:", error);
     }
   };
 
@@ -53,13 +67,14 @@ const MessagePage = () => {
         pauseOnHover
         theme="dark"
       />
+
       <div
-        className="bg-cover w-full"
+        className="bg-cover w-full overflow-y-auto  no-scroll-bar h-screen"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
         }}
       >
-        <div className=" mt-5  relative overflow-x-auto overflow-y-auto  h-[75vh]">
+        <div className=" mt-5  relative overflow-x-auto ">
           <table className="w-full text-sm text-left rtl:text-right text-white  overflow-hidden ">
             <thead className="text-xs text-white uppercase ">
               <tr>
@@ -73,14 +88,9 @@ const MessagePage = () => {
                   scope="col"
                   className="px-6 py-3 font-Poppins font-bold  text-[#C9AB81]"
                 >
-                  Email
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 font-Poppins font-bold  text-[#C9AB81]"
-                >
                   Message
                 </th>
+
                 <th
                   scope="col"
                   className="px-6 py-3 font-Poppins font-bold  text-[#C9AB81]"
@@ -90,23 +100,26 @@ const MessagePage = () => {
               </tr>
             </thead>
             <tbody className="overflow-y-auto">
-              {contacts.map((contact: any, index: number) => (
+              {reviews.map((review: any, index: number) => (
                 <tr key={index} className=" border-b">
                   <td className="px-6 py-4 font-Poppins font-md text-white">
-                    <h1 className="w-[250px] whitespace-nowrap overflow-hidden text-ellipsis text-[15px]">
-                      {contact.name}
+                    <h1 className="w-[150px] whitespace-nowrap overflow-hidden text-ellipsis text-[15px]">
+                      {review.name}
                     </h1>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[15px] font-Poppins text-white">
-                    {contact.email}
+                  <td className="px-6 py-4 max-w-[500px] text-wrap whitespace-nowrap  text-[15px] font-Poppins text-white">
+                    {review.message}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[15px] font-Poppins text-white">
-                    {contact.message}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 flex gap-4 whitespace-nowrap">
+                    <div className="flex gap-5">
+                      <IoMdCheckmark
+                        onClick={() => handleUpdate(review._id)}
+                        className="h-6 w-6 cursor-pointer text-green-500"
+                      />
+                    </div>
                     <div className="flex gap-5">
                       <RiDeleteBin6Line
-                        onClick={() => deleteModel(contact._id)}
+                        onClick={() => deleteModel(review._id)}
                         className="h-6 w-6 cursor-pointer text-red-600"
                       />
                     </div>
@@ -124,10 +137,10 @@ const MessagePage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: "0.5" }}
-                className="p-6 flex flex-col items-center justify-center rounded-lg bg-gray-800 gap-5"
+                className="p-6 flex flex-col items-center justify-center rounded-lg bg-gray-900 gap-5"
               >
                 <h1 className="text-lg text-white">
-                  Confirm the deletion of this contact?
+                  Confirm the deletion of this review?
                 </h1>
                 <div className="flex gap-4 items-center">
                   <button
@@ -154,4 +167,4 @@ const MessagePage = () => {
   );
 };
 
-export default MessagePage;
+export default ReviewPage;

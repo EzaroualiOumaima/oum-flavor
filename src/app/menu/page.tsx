@@ -134,8 +134,8 @@ const MenuPage = () => {
       </div>
       <div className="flex justify-center">
         <div
-          data-aos="fade-in"
-          data-aos-delay="600"
+          // data-aos="fade-in"
+          // data-aos-delay="600"
           className="grid grid-cols-2 gap-5 w-[80%] mb-24"
         >
           <AnimatePresence>
@@ -146,7 +146,7 @@ const MenuPage = () => {
                   className="p-4"
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.3}}
+                  transition={{ duration: 0.5, delay: index * 0.3 }}
                 >
                   <div className="flex flex-col">
                     <div className=" flex items-center gap-5">

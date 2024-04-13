@@ -1,7 +1,19 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import image1 from "@/assets/image1.jpg";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const HomePage = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-in-out",
+      offset: 100,
+    });
+  }, []);
   return (
     <div>
       <div

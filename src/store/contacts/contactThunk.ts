@@ -6,7 +6,7 @@ export const getContacts = createAsyncThunk(
   "contacts/getContacts",
   async (_, thunkApi) => {
     try {
-      const response = await axios.get("/api/contacts");
+      const response = await axios.get("https:oum-flavor.vercel.app/api/contacts");
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
@@ -21,7 +21,7 @@ export const addContacts = createAsyncThunk(
     thunkApi
   ) => {
     try {
-      const res = await axios.post("/api/contacts", credentials);
+      const res = await axios.post("https:oum-flavor.vercel.app/api/contacts", credentials);
       console.log(res)
      
     } catch (error) {
@@ -37,7 +37,7 @@ export const upadateContacts = createAsyncThunk(
     thunkApi
   ) => {
     try {
-      const res = await axios.put(`/api/contacts/${credentials.id}`, {
+      const res = await axios.put(`https:oum-flavor.vercel.app/api/contacts/${credentials.id}`, {
         name: credentials.name,
         email: credentials.email,
         message: credentials.message,
@@ -52,7 +52,7 @@ export const deleteContacts = createAsyncThunk(
   "contacts/deleteContactss",
   async (id: string, thunkApi) => {
     try {
-      await axios.delete(`/api/contacts/${id}`);
+      await axios.delete(`https:oum-flavor.vercel.app/api/contacts/${id}`);
       // alert("item Deleted")
       // window.location.reload()
     } catch (error) {

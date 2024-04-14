@@ -91,29 +91,32 @@ const MessagePage = () => {
               </tr>
             </thead>
             <tbody className="overflow-y-auto">
-              {contacts.map((contact: Contact, index: number) => (
-                <tr key={index} className=" border-b">
-                  <td className="px-6 py-4 font-Poppins font-md text-white">
-                    <h1 className="w-[250px] whitespace-nowrap overflow-hidden text-ellipsis text-[15px]">
-                      {contact.name}
-                    </h1>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[15px] font-Poppins text-white">
-                    {contact.email}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[15px] font-Poppins text-white">
-                    {contact.message}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex gap-5">
-                      <RiDeleteBin6Line
-                        onClick={() => deleteModel(contact._id)}
-                        className="h-6 w-6 cursor-pointer text-red-600"
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {contacts
+                .slice()
+                .reverse()
+                .map((contact: Contact, index: number) => (
+                  <tr key={index} className=" border-b">
+                    <td className="px-6 py-4 font-Poppins font-md text-white">
+                      <h1 className="w-[250px] whitespace-nowrap overflow-hidden text-ellipsis text-[15px]">
+                        {contact.name}
+                      </h1>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-[15px] font-Poppins text-white">
+                      {contact.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-[15px] font-Poppins text-white">
+                      {contact.message}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex gap-5">
+                        <RiDeleteBin6Line
+                          onClick={() => deleteModel(contact._id)}
+                          className="h-6 w-6 cursor-pointer text-red-600"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

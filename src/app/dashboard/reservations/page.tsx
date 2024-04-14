@@ -151,53 +151,58 @@ const PageReservation = () => {
             </tr>
           </thead>
           <tbody className="overflow-y-auto text-[14px] font-Poppins text-white">
-            {reservations.map((reservation: Reservation, index: number) => (
-              <tr
-                key={index}
-                className={`${
-                  index % 2 === 0 ? "even:bg-gray-50 even:dark:bg-gray-800" : ""
-                } border-b dark:border-gray-700`}
-              >
-                <td className="px-6 py-4 font-Poppins font-md">
-                  <h1 className="w-[140px] whitespace-nowrap overflow-hidden text-ellipsis text-[14px]">
-                    {reservation.name}
-                  </h1>
-                </td>
-                <td className=" px-6 py-4 whitespace-nowrap w-60">
-                  {reservation.email}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {reservation.phone}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {reservation.reservationDate}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {reservation.reservationTime}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {reservation.numberOfPeople}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap  ">
-                  <h1 className="w-32 overflow-hidden text-wrap ">
-                    {reservation.specialRequests}
-                  </h1>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex gap-3">
-                    <MdEditSquare
-                      onClick={() => updateModel(reservation)}
-                      className="cursor-pointer h-6 w-6 text-blue-600"
-                    />
+            {reservations
+              .slice()
+              .reverse()
+              .map((reservation: Reservation, index: number) => (
+                <tr
+                  key={index}
+                  className={`${
+                    index % 2 === 0
+                      ? "even:bg-gray-50 even:dark:bg-gray-800"
+                      : ""
+                  } border-b dark:border-gray-700`}
+                >
+                  <td className="px-6 py-4 font-Poppins font-md">
+                    <h1 className="w-[140px] whitespace-nowrap overflow-hidden text-ellipsis text-[14px]">
+                      {reservation.name}
+                    </h1>
+                  </td>
+                  <td className=" px-6 py-4 whitespace-nowrap w-60">
+                    {reservation.email}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {reservation.phone}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {reservation.reservationDate}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {reservation.reservationTime}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {reservation.numberOfPeople}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap  ">
+                    <h1 className="w-32 overflow-hidden text-wrap ">
+                      {reservation.specialRequests}
+                    </h1>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex gap-3">
+                      <MdEditSquare
+                        onClick={() => updateModel(reservation)}
+                        className="cursor-pointer h-6 w-6 text-blue-600"
+                      />
 
-                    <RiDeleteBin6Line
-                      onClick={() => deleteModel(reservation._id)}
-                      className="h-6 w-6 cursor-pointer text-red-600"
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                      <RiDeleteBin6Line
+                        onClick={() => deleteModel(reservation._id)}
+                        className="h-6 w-6 cursor-pointer text-red-600"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

@@ -70,10 +70,12 @@ const MenuPage = () => {
           From Our Menu
         </h1>
         <ul className="flex flex-row gap-36 mt-5 mx-4 text-xl font-[Poppins]">
-          <li className="text-white p-2">
+          <li
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="text-white p-2"
+          >
             <button
-              data-aos="fade-up"
-              data-aos-delay="200"
               className={`res-buttons  ${
                 index === 1 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
@@ -82,10 +84,12 @@ const MenuPage = () => {
               Appetizers
             </button>
           </li>
-          <li className="text-white p-2">
+          <li
+            data-aos="fade-up"
+            data-aos-delay="300"
+            className="text-white p-2"
+          >
             <button
-              data-aos="fade-up"
-              data-aos-delay="300"
               className={` res-buttons ${
                 index === 2 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
@@ -94,10 +98,12 @@ const MenuPage = () => {
               Main Dish
             </button>
           </li>
-          <li className="text-white p-2">
+          <li
+            data-aos="fade-up"
+            data-aos-delay="400"
+            className="text-white p-2"
+          >
             <button
-              data-aos="fade-up"
-              data-aos-delay="400"
               className={`res-buttons ${
                 index === 3 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
@@ -106,10 +112,12 @@ const MenuPage = () => {
               Dessert
             </button>
           </li>
-          <li className="text-white p-2">
+          <li
+            data-aos="fade-up"
+            data-aos-delay="500"
+            className="text-white p-2"
+          >
             <button
-              data-aos="fade-up"
-              data-aos-delay="500"
               className={`res-buttons ${
                 index === 4 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
@@ -118,10 +126,12 @@ const MenuPage = () => {
               Drinks
             </button>
           </li>
-          <li className="text-white p-2">
+          <li
+            data-aos="fade-up"
+            data-aos-delay="600"
+            className="text-white p-2"
+          >
             <button
-              data-aos="fade-up"
-              data-aos-delay="600"
               className={`res-buttons  ${
                 index === 5 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}

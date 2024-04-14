@@ -11,7 +11,7 @@ const Navbar = () => {
     <nav
       className={`${
         (path.includes("/dashboard") || path.includes("/sign-in")) && "hidden"
-      } bg-white/5 backdrop-blur-lg flex fixed  sm:pl-3 pr-7 h-24 w-full justify-between items-center overflow-hidden z-30 sm:justify-between`}
+      } bg-white/5 backdrop-blur-lg flex fixed  sm:pl-3 pr-7 h-24 w-full justify-between items-center overflow-hidden z-50 sm:justify-between`}
     >
       <div className="w-auto ">
         <Image

@@ -33,7 +33,7 @@ export async function sendMail({
     const sendResult = await transport.sendMail({
       from: from,
       to :SMTP_EMAIL,
-      subject,
+      subject:'Welcome to OumFlavor',
       html: `
       <div
                 style="
@@ -50,7 +50,7 @@ export async function sendMail({
                   <p style="font-weight: 600">
                     <strong style="color: red">From:</strong> ${name}
                   </p>
-                  <p style="font-weight: 600" ><strong style="color: red">Tel:</strong> ${body}</p>
+                  <p style="font-weight: 600" ><strong style="color: red">Message:</strong> ${body}</p>
                 </div>
               </div>
       

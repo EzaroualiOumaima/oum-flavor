@@ -11,6 +11,8 @@ import { addReservations } from "@/store/reservation/reservationThunk";
 import checkmark from "@/lotieAnimations/checkmark.json";
 import Lottie from "lottie-react";
 import { addReviews } from "@/store/reviews/reviewThunk";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ReservationPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +37,15 @@ const ReservationPage = () => {
   });
 
   // console.log(reservations);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-in-out",
+      offset: 100,
+    });
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -171,13 +182,24 @@ const ReservationPage = () => {
         }}
       >
         <div className="flex flex-col gap-6 items-center justify-center w-full">
-          <h2 className="font-[JosefinSans] text-2xl font-semibold italic text-[#C9AB81]">
+          <h2
+            data-aos="fade-up"
+            className="font-[JosefinSans] text-2xl font-semibold italic text-[#C9AB81]"
+          >
             Online Reservation
           </h2>
-          <h1 className=" font-[CormorantGaramond]   text-7xl tracking-wider  ">
+          <h1
+            data-aos="fade-up"
+            data-aos-delay="150"
+            className=" font-[CormorantGaramond]   text-7xl tracking-wider  "
+          >
             Book A Table
           </h1>
-          <p className="font-[Poppins] text-center text-xl leading-7">
+          <p
+            data-aos="fade-up"
+            data-aos-delay="250"
+            className="font-[Poppins] text-center text-xl leading-7"
+          >
             OumFlavor is available nightly for group reservations small and
             large. <br />
             Ready to secure your spot for a delightful dining experience? Fill
@@ -193,7 +215,9 @@ const ReservationPage = () => {
         >
           {isShown ? (
             <div className="w-full py-4 flex items-center justify-center gap-20  ">
-              <div className="flex flex-col gap-5 pt-7">
+              <div 
+              data-aos="fade-up" 
+              className="flex flex-col gap-5 pt-7">
                 <h1 className="font-[CormorantGaramond]  text-5xl tracking-wider text-gray-100 leading-[5rem]  text-center ">
                   Thank you for your reservation, <br />
                   we&apos;ll contact you soon !
@@ -206,7 +230,10 @@ const ReservationPage = () => {
                   />
                 </div>
               </div>
-              <form className="max-w-xl mx-auto mt-16 flex w-full flex-col border rounded-lg p-6">
+              <form 
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="max-w-xl mx-auto mt-16 flex w-full flex-col border rounded-lg p-6">
                 <h2 className=" mb-3 font-[CormorantGaramond]  text-2xl text-center  text-white">
                   Your Feedback
                 </h2>
@@ -268,11 +295,17 @@ const ReservationPage = () => {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-3 gap-20 ">
+              <div
+                className="grid grid-cols-3 gap-20 "
+                data-aos="fade-up"
+                data-aos-delay="300"
+              >
                 <select
                   name="numberOfPeople"
                   value={instructions.numberOfPeople}
                   onChange={handleChange}
+                  // data-aos="fade-up"
+                  // data-aos-delay="400"
                   className=" h-[3rem] text-lg  font-[Poppins]  text-white bg-transparent border-0 border-b-2 focus:outline-none focus:border-[#C9AB81] "
                 >
                   <option className="text-slate-900" value={1}>
@@ -307,6 +340,8 @@ const ReservationPage = () => {
                   </option>
                 </select>
                 <input
+                  // data-aos="fade-up"
+                  // data-aos-delay="500"
                   type="date"
                   name="reservationDate"
                   value={
@@ -401,7 +436,11 @@ const ReservationPage = () => {
                 />
               </div>
               <div className="w-full justify-center flex mt-5 ">
-                <button className="text-lg  font-[Poppins] font-semibold text-white  bg-[#C9AB81] border border-[#C9AB81] px-6 py-3 hover:bg-[#b49365]   hover:scale-110 duration-500 rounded-sm ">
+                <button
+                  data-aos="fade-up"
+                  data-aos-delay="350"
+                  className="text-lg  font-[Poppins] font-semibold text-white  bg-[#C9AB81] border border-[#C9AB81] px-6 py-3 hover:bg-[#b49365]   hover:scale-110 duration-500 rounded-sm "
+                >
                   BOOK A TABLE NOW
                 </button>
               </div>
@@ -410,7 +449,10 @@ const ReservationPage = () => {
         </form>
       </div>
       {isAlertShown && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-900 bg-opacity-80">
+        <div
+          data-aos="zoom-in"
+          className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-900 bg-opacity-80"
+        >
           <div className=" p-8 rounded-lg flex  bg-gray-800 flex-col gap-3 justify-center items-center w-96">
             <Lottie
               animationData={checkmark}

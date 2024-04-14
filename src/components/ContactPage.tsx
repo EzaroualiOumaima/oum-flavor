@@ -1,7 +1,64 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import conatctImg from "@/assets/contact.jpg";
 import bgImg from "@/assets/bgImg.jpg";
+import { sendMail } from "@/actions/mail";
+import { useDispatch, useSelector } from "react-redux";
+import { addContacts } from "@/store/contacts/contactThunk";
+import { AppDispatch, RootState } from "@/store/store";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const ContactPage = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-in-out",
+      offset: 100,
+    });
+  }, []);
+  const dispatch = useDispatch<AppDispatch>();
+  const contacts = useSelector((state: RootState) => state.contacts);
+  const [formData, setFormData] = useState({
+    from: "",
+    name: "",
+    subject: "",
+    body: "",
+  });
+
+  async function handleSubmit(event: any) {
+    event.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+    if (
+      formData.name &&
+      formData.body &&
+      formData.from &&
+      emailRegex.test(formData.from)
+    ) {
+      await dispatch(
+        addContacts({
+          name: formData.name,
+          email: formData.from,
+          message: formData.body,
+        })
+      );
+      console.log("sent to db");
+      await sendMail(formData);
+      alert("message sent");
+      setFormData({
+        from: "",
+        name: "",
+        subject: "welcome to oum flavor",
+        body: "",
+      });
+    } else {
+      return alert("please complete the form");
+    }
+    // console.log("handle Submit Launched");
+  }
+
   return (
     <>
       <div
@@ -22,10 +79,17 @@ const ContactPage = () => {
         }}
       >
         <div className="flex flex-col px-8 items-start gap-3 w-5/12">
-          <h1 className=" title-contact text-8xl font-semibold text-[#C9AB81] ">
+          <h1
+            data-aos="fade-up-right"
+            className=" title-contact text-8xl font-semibold text-[#C9AB81] "
+          >
             __Write to Us__
           </h1>
-          <div className="flex flex-col gap-3">
+          <div
+            data-aos="fade-up-right"
+            data-aos-delay="100"
+            className="flex flex-col gap-3"
+          >
             <p className="contact-p">
               All comments & questions are welcome. <br />
             </p>
@@ -33,13 +97,13 @@ const ContactPage = () => {
               {" "}
               Please email us:{" "}
               <span className="hover:text-[#C9AB81] hover:font-semibold hover:cursor-pointer">
-                oumFlavor@gmail.com
+                oumflavor@gmail.com
               </span>
             </p>
             <p className="contact-p">
               Reserve by email:{" "}
               <span className="hover:text-[#C9AB81] hover:font-semibold hover:cursor-pointer">
-                bookingFlavor@gmail.com
+                oumflavor@gmail.com
               </span>
               <br />
             </p>
@@ -55,20 +119,37 @@ const ContactPage = () => {
         </div>
         <form className="flex flex-col items-start gap-10 w-6/12">
           <input
+            data-aos="fade-up"
+            data-aos-delay="200"
             className="h-20 outline-none w-full bg-slate-700 border border-[#C9AB81] pl-5 rounded placeholder:text-slate-400 "
             type="text"
             placeholder="Your Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
           <input
+            data-aos="fade-up"
+            data-aos-delay="300"
             className="h-20 w-full outline-none border border-[#C9AB81] bg-slate-700 pl-5 rounded placeholder:text-slate-400 "
             type="text"
             placeholder="Your Email"
+            value={formData.from}
+            onChange={(e) => setFormData({ ...formData, from: e.target.value })}
           />
           <textarea
+            data-aos="fade-up"
+            data-aos-delay="400"
             placeholder="Your Message"
             className="h-24 outline-none w-full border border-[#C9AB81] bg-slate-700 pl-5 pt-3 rounded placeholder:text-slate-400"
+            value={formData.body}
+            onChange={(e) => setFormData({ ...formData, body: e.target.value })}
           ></textarea>
-          <button className="text-xl font-[Poppins] font-semibold text-white bg-[#C9AB81]  border border-[#C9AB81] px-8 py-4 hover:scale-110 duration-500">
+          <button
+            data-aos="fade-up"
+            data-aos-delay="500"
+            onClick={handleSubmit}
+            className="text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500"
+          >
             Send
           </button>
         </form>

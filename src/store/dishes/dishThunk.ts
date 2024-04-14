@@ -7,7 +7,7 @@ export const getAllDishes = createAsyncThunk(
   "dishes/getAllDishes",
   async (_, thunkApi) => {
     try {
-      const response = await axios.get(`${process.env.BASE_URL}/api/dishes`);
+      const response = await axios.get(`/api/dishes`);
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
@@ -27,7 +27,7 @@ export const addDishes = createAsyncThunk(
     thunkApi
   ) => {
     try {
-      const res = await axios.post(`${process.env.BASE_URL}/api/dishes`, credentials);
+      const res = await axios.post(`/api/dishes`, credentials);
     } catch (error) {
       return thunkApi.rejectWithValue(error);
     }
@@ -46,7 +46,7 @@ export const updateDishes = createAsyncThunk(
     thunkApi
   ) => {
     try {
-      const res = await axios.put(`${process.env.BASE_URL}/api/dishes/${credentials.id}`, {
+      const res = await axios.put(`/api/dishes/${credentials.id}`, {
         title: credentials.title,
        
         ingredients: credentials.ingredients,
@@ -62,7 +62,7 @@ export const deleteDishes = createAsyncThunk(
   "dishes/deleteDishess",
   async (id: string, thunkApi) => {
     try {
-      await axios.delete(`${process.env.BASE_URL}/api/dishes/${id}`);
+      await axios.delete(`/api/dishes/${id}`);
       // alert("item Deleted")
       // window.location.reload()
     } catch (error) {

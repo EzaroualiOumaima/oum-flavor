@@ -13,6 +13,7 @@ import Lottie from "lottie-react";
 import { addReviews } from "@/store/reviews/reviewThunk";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { sendMail } from "@/actions/mailReservation";
 
 const ReservationPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -101,21 +102,40 @@ const ReservationPage = () => {
           specialRequests: instructions.specialRequests,
         })
       );
+      try {
+        await sendMail({
+          from: instructions.email,
+          name: instructions.name,
+          subject: "Reservation Confirmation",
+          body: "Your reservation has been confirmed.",
+        });
 
-      // Resetting the instructions state to clear the input fields
-      setInstructions({
-        name: "",
-        email: "",
-        phone: "",
-        reservationDate: getCurrentDate(),
-        reservationTime: "",
-        numberOfPeople: 1,
-        specialRequests: "",
-      });
+        // await sendMail({
+        //   from: "oumflavor@gmail.com",
+        //   name: "OumFlavor",
+        //   subject: "New Reservation",
+        //   body: `You have received a new reservation from ${instructions.name}.`,
+        // });
 
-      return setIsShown(true);
+        // Resetting the instructions state to clear the input fields
+        setInstructions({
+          name: "",
+          email: "",
+          phone: "",
+          reservationDate: getCurrentDate(),
+          reservationTime: "",
+          numberOfPeople: 1,
+          specialRequests: "",
+        });
+
+        return setIsShown(true);
+      } catch (error) {
+        console.error("Error sending emails: ", error);
+        toast.error("Failed to send confirmation emails.");
+      }
+    } else {
+      toast.error("Data Failed");
     }
-    return toast.error("Data Failed");
   };
   // add reviews
   const handleSendFeedback = (e: FormEvent) => {
@@ -215,9 +235,7 @@ const ReservationPage = () => {
         >
           {isShown ? (
             <div className="w-full py-4 flex items-center justify-center gap-20  ">
-              <div 
-              data-aos="fade-up" 
-              className="flex flex-col gap-5 pt-7">
+              <div data-aos="fade-up" className="flex flex-col gap-5 pt-7">
                 <h1 className="font-[CormorantGaramond]  text-5xl tracking-wider text-gray-100 leading-[5rem]  text-center ">
                   Thank you for your reservation, <br />
                   we&apos;ll contact you soon !
@@ -230,10 +248,11 @@ const ReservationPage = () => {
                   />
                 </div>
               </div>
-              <form 
-              data-aos="fade-up"
-              data-aos-delay="100"
-              className="max-w-xl mx-auto mt-16 flex w-full flex-col border rounded-lg p-6">
+              <form
+                data-aos="fade-up"
+                data-aos-delay="100"
+                className="max-w-xl mx-auto mt-16 flex w-full flex-col border rounded-lg p-6"
+              >
                 <h2 className=" mb-3 font-[CormorantGaramond]  text-2xl text-center  text-white">
                   Your Feedback
                 </h2>

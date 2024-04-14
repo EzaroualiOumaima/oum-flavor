@@ -8,7 +8,7 @@ const {BASE_URL} = process.env
 export default authMiddleware({
   // Allow signed out users to access the specified routes:
   // publicRoutes: ["/api/dishes"]
-  publicRoutes: [`${BASE_URL}/api/reviews`, `${BASE_URL}/api/dishes`, `${BASE_URL}/api/reservations`, `${BASE_URL}/api/reviews`],
+  publicRoutes: [`${BASE_URL}/api/reviews`, `${BASE_URL}/api/contactus` ,`${BASE_URL}/api/dishes`, `${BASE_URL}/api/reservations`, `${BASE_URL}/api/reviews`],
 });
  
 export const config = {

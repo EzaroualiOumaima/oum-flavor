@@ -101,32 +101,35 @@ const ReviewPage = () => {
               </tr>
             </thead>
             <tbody className="overflow-y-auto">
-              {reviews.map((review: Review, index: number) => (
-                <tr key={index} className=" border-b">
-                  <td className="px-6 py-4 font-Poppins font-md text-white">
-                    <h1 className="w-[150px] whitespace-nowrap overflow-hidden text-ellipsis text-[15px]">
-                      {review.name}
-                    </h1>
-                  </td>
-                  <td className="px-6 py-4 max-w-[500px] text-wrap whitespace-nowrap  text-[15px] font-Poppins text-white">
-                    {review.message}
-                  </td>
-                  <td className="px-6 py-4 flex gap-4 whitespace-nowrap">
-                    <div className="flex gap-5">
-                      <IoMdCheckmark
-                        onClick={() => handleUpdate(review._id)}
-                        className="h-6 w-6 cursor-pointer text-green-500"
-                      />
-                    </div>
-                    <div className="flex gap-5">
-                      <RiDeleteBin6Line
-                        onClick={() => deleteModel(review._id)}
-                        className="h-6 w-6 cursor-pointer text-red-600"
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {reviews
+                .slice()
+                .reverse()
+                .map((review: Review, index: number) => (
+                  <tr key={index} className=" border-b">
+                    <td className="px-6 py-4 font-Poppins font-md text-white">
+                      <h1 className="w-[150px] whitespace-nowrap overflow-hidden text-ellipsis text-[15px]">
+                        {review.name}
+                      </h1>
+                    </td>
+                    <td className="px-6 py-4 max-w-[500px] text-wrap whitespace-nowrap  text-[15px] font-Poppins text-white">
+                      {review.message}
+                    </td>
+                    <td className="px-6 py-4 flex gap-4 whitespace-nowrap">
+                      <div className="flex gap-5">
+                        <IoMdCheckmark
+                          onClick={() => handleUpdate(review._id)}
+                          className="h-6 w-6 cursor-pointer text-green-500"
+                        />
+                      </div>
+                      <div className="flex gap-5">
+                        <RiDeleteBin6Line
+                          onClick={() => deleteModel(review._id)}
+                          className="h-6 w-6 cursor-pointer text-red-600"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -22,6 +22,7 @@ const ContactPage = () => {
   }, []);
   const dispatch = useDispatch<AppDispatch>();
   const contacts = useSelector((state: RootState) => state.contacts);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [formData, setFormData] = useState({
     from: "",
@@ -32,6 +33,7 @@ const ContactPage = () => {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
+    setIsDisabled(true);
     const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
     if (
       formData.name &&
@@ -45,7 +47,7 @@ const ContactPage = () => {
           email: formData.from,
           message: formData.body,
         })
-      );
+      )
       console.log("sent to db");
       await sendMail(formData);
       setIsSent(true);
@@ -58,7 +60,9 @@ const ContactPage = () => {
       setTimeout(() => {
         setIsSent(false);
       }, 2500);
+      setIsDisabled(false);
     } else {
+      setIsDisabled(false)
       return alert("please complete the form");
     }
     // console.log("handle Submit Launched");
@@ -150,14 +154,19 @@ const ContactPage = () => {
             onChange={(e) => setFormData({ ...formData, body: e.target.value })}
           ></textarea>
           <div className="flex items-center gap-5">
-            <button
-              data-aos="fade-up"
-              data-aos-delay="500"
-              onClick={handleSubmit}
-              className="text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500"
-            >
-              Send
-            </button>
+            <div 
+            data-aos="fade-up"
+            data-aos-delay="500">
+              <button
+                onClick={handleSubmit}
+                disabled={isDisabled}
+                className={`text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500 ${
+                  isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
+                >
+                Send
+              </button>
+            </div>
             {isSent && (
               <>
                 <motion.div

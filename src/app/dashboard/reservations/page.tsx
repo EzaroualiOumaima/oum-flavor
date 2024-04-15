@@ -322,21 +322,10 @@ const PageReservation = () => {
                   }
                   className="h-[3rem] text-lg font-[Poppins] text-white bg-transparent border-0 border-b-2 border-gray-100 focus:outline-none focus:border-[#C9AB81]"
                 >
-                  {/* {[...Array(12)].map((_, index) => {
-                    const hour = index === 0 ? 12 : index;
-                    const amPm = index < 12 ? "AM" : "PM";
-                    const value = index.toString().padStart(2, "0");
-                    return (
-                      <option
-                        key={hour}
-                        className="text-slate-900"
-                        value={value}
-                      >
-                        {hour}:{index === 0 ? "00" : "00"} {amPm}
-                      </option>
-                    );
-                  })} */}
-                  {[...Array(13)].map((_, index) => {
+                 
+
+
+                  {[...Array(24)].map((_, index) => {
                     const hour = index + 11 <= 12 ? index + 11 : index - 1;
                     const amPm = index < 12 ? "AM" : "PM";
                     const value = hour.toString().padStart(2, "0");

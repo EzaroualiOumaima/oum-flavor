@@ -5,8 +5,8 @@ const contactSchema = new mongoose.Schema({
     name: {
       type: String,
       required: true,
-      minlength: 3,
-      maxlength: 10
+      minlength: 2,
+      maxlength: 30
     },
     email: {
       type: String,
@@ -24,8 +24,8 @@ export default contactModel;
 
 const contactValidation = joi.object({
     name: joi.string()
-      .min(5)
-      .max(10)
+      .min(2)
+      .max(30)
       .required(),
     email: joi.string()
       .email({ tlds: { allow: false } })

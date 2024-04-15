@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import AboutPage from "@/components/AboutPage";
+
 describe("AboutPage component", () => {
   test("renders AboutPage component", () => {
     const { getByText, getByAltText } = render(<AboutPage />);

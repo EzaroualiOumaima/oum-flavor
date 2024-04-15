@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Navbar from "@/components/Navbar";
 import { usePathname } from "next/navigation";
+// Mock de la fonction usePathname pour pouvoir contrôler son comportement pendant les tests
 
 jest.mock("next/navigation");
 
@@ -34,6 +35,7 @@ describe("Navbar Component", () => {
   });
 
   it("navigates correctly on button click", () => {
+    // / Configuration de usePathname pour simuler un chemin différent
     (usePathname as jest.Mock).mockReturnValue("/");
     const { container } = render(<Navbar />);
     const menuButton = screen.getByText("Menu");

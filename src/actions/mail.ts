@@ -13,6 +13,7 @@ export async function sendMail({
   body: string;
 }) {
   const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
+  // Création d'un objet de transport Nodemailer avec les informations de connexion
 
   const transport = nodemailer.createTransport({
     service: "gmail",
@@ -21,6 +22,8 @@ export async function sendMail({
       pass: SMTP_PASSWORD,
     },
   });
+    // Vérification du transport pour s'assurer qu'il est correctement configuré
+
   try {
     const testResult = await transport.verify();
     console.log(testResult);
@@ -60,18 +63,7 @@ export async function sendMail({
   } catch (error) {
     console.log(error);
   }
-//ajouter pour la reservation 
-  // try {
-  //   const confirmation = await transport.sendMail({
-  //     from: SMTP_EMAIL,
-  //     to :from,
-  //     subject: 'confirmation',
-  //     html: `${body} send by ${SMTP_EMAIL}`,
-  //   });
-  //   console.log(confirmation);
-  // } catch (error) {
-  //   console.log(error);
-  // }
+
 
 
 }

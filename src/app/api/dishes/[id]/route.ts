@@ -10,10 +10,10 @@ export async function PUT(
   await connectMongoDB();
   try {
     const { id } = params;
-    const { title, price, ingredients, category, image } = await request.json();
+    const { title, price, ingredients, category } = await request.json();
     const newDish = await dishModel.findByIdAndUpdate(
       id,
-      { title, price, ingredients, category, image },
+      { title, price, ingredients, category },
       { new: true }
     );
     if (!newDish) {

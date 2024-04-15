@@ -28,16 +28,15 @@ const dishSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  // image:{
-  //   type: String
-  // }
+ 
 });
+// Définition du modèle MongoDB pour le schéma de Dish
 const dishModel =
   mongoose.models.Dishes || mongoose.model("Dishes", dishSchema);
 export default dishModel;
 
 // Define Joi schema for validation
-const dishValidationSchema = joi.object({
+export const dishValidationSchema = joi.object({
   category: joi.string().required().trim().min(3).max(200),
   title: joi.string().required().trim().min(3).max(200),
   ingredients: joi.string().required().min(2).max(100),

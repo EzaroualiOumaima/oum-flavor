@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import conatctImg from "@/assets/contact.jpg";
+import { motion } from "framer-motion";
 import bgImg from "@/assets/bgImg.jpg";
 import { sendMail } from "@/actions/mail";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +22,8 @@ const ContactPage = () => {
   }, []);
   const dispatch = useDispatch<AppDispatch>();
   const contacts = useSelector((state: RootState) => state.contacts);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isSent, setIsSent] = useState(false);
   const [formData, setFormData] = useState({
     from: "",
     name: "",
@@ -30,6 +33,7 @@ const ContactPage = () => {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
+    setIsDisabled(true);
     const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
     if (
       formData.name &&
@@ -46,14 +50,19 @@ const ContactPage = () => {
       );
       console.log("sent to db");
       await sendMail(formData);
-      alert("message sent");
+      setIsSent(true);
       setFormData({
         from: "",
         name: "",
         subject: "welcome to oum flavor",
         body: "",
       });
+      setTimeout(() => {
+        setIsSent(false);
+      }, 2500);
+      setIsDisabled(false);
     } else {
+      setIsDisabled(true);
       return alert("please complete the form");
     }
     // console.log("handle Submit Launched");
@@ -144,14 +153,29 @@ const ContactPage = () => {
             value={formData.body}
             onChange={(e) => setFormData({ ...formData, body: e.target.value })}
           ></textarea>
-          <button
-            data-aos="fade-up"
-            data-aos-delay="500"
-            onClick={handleSubmit}
-            className="text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500"
-          >
-            Send
-          </button>
+          <div className="flex items-center gap-5">
+            <div data-aos="fade-up" data-aos-delay="500">
+              <button
+                onClick={handleSubmit}
+                disabled={isDisabled}
+                className={`text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500 ${
+                  isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
+              >
+                Send
+              </button>
+            </div>
+            {isSent && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                >
+                  <p className="text-green-600 text-lg">Message sent !</p>
+                </motion.div>
+              </>
+            )}
+          </div>
         </form>
       </div>
     </>

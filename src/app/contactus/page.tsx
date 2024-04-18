@@ -47,7 +47,7 @@ const ContactPage = () => {
           email: formData.from,
           message: formData.body,
         })
-      )
+      );
       console.log("sent to db");
       await sendMail(formData);
       setIsSent(true);
@@ -62,7 +62,7 @@ const ContactPage = () => {
       }, 2500);
       setIsDisabled(false);
     } else {
-      setIsDisabled(false)
+      setIsDisabled(true);
       return alert("please complete the form");
     }
     // console.log("handle Submit Launched");
@@ -154,16 +154,14 @@ const ContactPage = () => {
             onChange={(e) => setFormData({ ...formData, body: e.target.value })}
           ></textarea>
           <div className="flex items-center gap-5">
-            <div 
-            data-aos="fade-up"
-            data-aos-delay="500">
+            <div data-aos="fade-up" data-aos-delay="500">
               <button
                 onClick={handleSubmit}
                 disabled={isDisabled}
                 className={`text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500 ${
                   isDisabled ? "cursor-not-allowed" : "cursor-pointer"
                 }`}
-                >
+              >
                 Send
               </button>
             </div>

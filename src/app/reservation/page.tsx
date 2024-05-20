@@ -185,13 +185,14 @@ const ReservationPage = () => {
         theme="dark"
       />
       <div
-        className="w-full h-screen flex items-center justify-center bg-cover"
+        className="w-full h-[55vh]  md:h-screen flex items-center justify-center bg-cover "
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1 ), rgba(0, 0, 0, 0.2)), url(${reservationImg.src})`,
           backgroundPosition: "bottom center",
+          
         }}
       >
-        <h1 className="text-6xl tracking-wider font-bold text-white font-[JosefinSans]">
+        <h1 className="text-3xl md:text-6xl tracking-wider font-bold text-white font-[JosefinSans]">
           RESEREVATION
         </h1>
       </div>
@@ -211,14 +212,14 @@ const ReservationPage = () => {
           <h1
             data-aos="fade-up"
             data-aos-delay="150"
-            className=" font-[CormorantGaramond]   text-7xl tracking-wider  "
+            className=" font-[CormorantGaramond] text-5xl md:text-7xl tracking-wider  "
           >
             Book A Table
           </h1>
           <p
             data-aos="fade-up"
             data-aos-delay="250"
-            className="font-[Poppins] text-center text-xl leading-7"
+            className="font-[Poppins] text-center text-lg md:text-xl  leading-7"
           >
             OumFlavor is available nightly for group reservations small and
             large. <br />
@@ -230,13 +231,13 @@ const ReservationPage = () => {
         <form
           onSubmit={handleSubmit}
           className={`flex flex-col gap-6 ${
-            isShown ? "w-[85%]" : "w-full"
-          } mt-16 px-12`}
+            isShown ? "w-full md:w-[85%]" : "w-full"
+          } mt-16 px-6 md:px-12`}
         >
           {isShown ? (
-            <div className="w-full py-4 flex items-center justify-center gap-20  ">
+            <div className=" flex-col md:flex-row w-full py-4 flex items-center justify-center  gap-10 md:gap-20  ">
               <div data-aos="fade-up" className="flex flex-col gap-5 pt-7">
-                <h1 className="font-[CormorantGaramond]  text-5xl tracking-wider text-gray-100 leading-[5rem]  text-center ">
+                <h1 className="font-[CormorantGaramond] text-3xl md:text-5xl tracking-wider text-gray-100 leading-[5rem]  text-center ">
                   Thank you for your reservation, <br />
                   we&apos;ll contact you soon !
                 </h1>
@@ -315,7 +316,7 @@ const ReservationPage = () => {
           ) : (
             <>
               <div
-                className="grid grid-cols-3 gap-20 "
+                className="grid grid-cols-1 md:grid-cols-3 gap-20 "
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
@@ -427,31 +428,34 @@ const ReservationPage = () => {
                   name="name"
                   value={instructions.name}
                   onChange={handleChange}
-                  placeholder="Your Name"
+                  placeholder="Name *"
+                  required
                   className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2  focus:outline-none  focus:border-[#C9AB81]"
                 />
                 <input
                   type="email"
                   name="email"
                   value={instructions.email}
+                  required
                   onChange={handleChange}
-                  placeholder="Email"
-                  className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2    focus:outline-none  focus:border-[#C9AB81] "
+                  placeholder="Email *"
+                  className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg  text-white bg-transparent border-0 border-b-2    focus:outline-none  focus:border-[#C9AB81] "
                 />
                 <input
                   type="text"
-                  placeholder="Phone"
+                  placeholder="Phone *"
                   name="phone"
+                  required
                   value={instructions.phone}
                   onChange={handleChangePhone}
-                  className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100 appearance-none   focus:outline-none  focus:border-[#C9AB81] "
+                  className=" h-[3rem] font-[Poppins]  placeholder:text-white text-lg  text-white bg-transparent border-0 border-b-2 border-gray-100 appearance-none   focus:outline-none  focus:border-[#C9AB81] "
                 />
                 <textarea
                   name="specialRequests"
                   value={instructions.specialRequests}
                   onChange={handleChange}
                   placeholder="Special Requests"
-                  className=" col-span-3 h-[7rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100  focus:outline-none focus:border-[#C9AB81]"
+                  className=" col-span-1 md:col-span-3 h-[7rem] font-[Poppins]  placeholder:text-white text-lg   text-white bg-transparent border-0 border-b-2 border-gray-100  focus:outline-none focus:border-[#C9AB81]"
                 />
               </div>
               <div className="w-full justify-center flex mt-5 ">

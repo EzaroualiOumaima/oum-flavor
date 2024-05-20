@@ -28,13 +28,13 @@ function InfiniteMovingCardsDemo() {
           <h2
             data-aos="fade-down"
             data-aos-delay="500"
-            className="font-[JosefinSans] font-semibold italic text-2xl text-[#C9AB81]"
+            className="font-[JosefinSans] font-semibold italic pt-24 md:pt-0 text-2xl text-[#C9AB81]"
           >
             What our customers say
           </h2>
           <h1
             data-aos="fade-down"
-            className="font-[CormorantGaramond]  text-slate-200 text-5xl tracking-wider"
+            className="font-[CormorantGaramond] text-slate-200 text-center text-4xl md:text-5xl tracking-wider"
           >
             Their Testimonials{" "}
           </h1>

@@ -19,13 +19,6 @@ const Sidebar = () => {
           </div>
           <div className="flex flex-col flex-1  relative  ">
             <nav className="flex-1 px-3 py-10 bg-gray-900 ">
-              {/* <Link
-                href="/dashboard"
-                className="flex items-center px-4 py-2 text-lg text-gray-100 hover:bg-gray-700"
-              >
-                <MdSpaceDashboard className="h-6 w-6 mr-2" />
-                Dashboard
-              </Link> */}
               <Link
                 href="/dashboard/dishes"
                 className="flex items-center px-4 py-2 mt-6 text-lg text-gray-100 hover:bg-gray-700"

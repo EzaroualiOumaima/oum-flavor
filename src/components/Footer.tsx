@@ -23,7 +23,7 @@ const Footer = () => {
       }}
     >
       <section className="max-w-full mx-8 text-white">
-        <div className=" grid md:grid-cols-3 py-5">
+        <div className=" flex flex-col justify-center md:grid md:grid-cols-3 py-5">
           <div className=" py-8 px-4  ">
             <h1 className="sm:text-3xl text-xl font-bold sm:text-left text-justify mb-3 flex items-center gap-3">
               <Image src={logo} alt="Logo" className="max-w-[70px]" />
@@ -39,8 +39,8 @@ const Footer = () => {
               <p>Morocco , CASABLANCA</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 col-span-2 md:pl-10 ">
-            <div className="py-8 px-4 ">
+          <div className=" flex flex-wrap flex-grow md:grid md:grid-cols-3 col-span-2 md:pl-10  gap-x-14">
+            <div className="py-8 px-0 md:px-4 ">
               <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
                 Links
               </h1>
@@ -109,7 +109,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="py-8 px-4 flex flex-col ">
+            <div className="py-8 px-3 flex flex-col w-full ">
               <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3 ">
                 Contact Us
               </h1>
@@ -127,7 +127,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-3 mt-4">
                 <CiGlobe className="w-6 h-6  text-[#C9AB81]" />
-                <h1 className=" font-bold sm:text-left  ">Socials:</h1>
+                <h1 className=" font-bold sm:text-left ">Socials:</h1>
                 <Link href="#">
                   <FaInstagram
                     data-testid="instagram-icon"

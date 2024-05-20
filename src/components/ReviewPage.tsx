@@ -32,7 +32,7 @@ export function InfiniteMovingCardsDemo() {
           </h2>
           <h1
             data-aos="fade-down"
-            className="font-[CormorantGaramond]  text-slate-200 text-5xl tracking-wider"
+            className="font-[CormorantGaramond] text-center   text-slate-200 text-4xl md:text-5xl tracking-wider"
           >
             Their Testimonials{" "}
           </h1>

@@ -50,7 +50,7 @@ const MenuPage = () => {
   };
   return (
     <div
-      className=" gap-7 justify-center items-center min-h-screen text-white bg-cover pt-32"
+      className=" gap-7 justify-center items-center min-h-screen text-white bg-cover pt-32 overflow-hidden"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
       }}
@@ -65,11 +65,11 @@ const MenuPage = () => {
         <h1
           data-aos="fade-up"
           data-aos-delay="100"
-          className="font-[CormorantGaramond] text-7xl tracking-wider"
+          className="font-[CormorantGaramond] text-5xl md:text-7xl tracking-wider"
         >
           From Our Menu
         </h1>
-        <ul className="flex flex-row gap-36 mt-5 mx-4 text-xl font-[Poppins]">
+        <ul className="flex gap-3 flex-row md:gap-36 mt-5 md:items-center md:justify-center mx-4 text-xl font-[Poppins] w-full overflow-x-auto ">
           <li
             data-aos="fade-up"
             data-aos-delay="200"
@@ -90,7 +90,7 @@ const MenuPage = () => {
             className="text-white p-2"
           >
             <button
-              className={` res-buttons ${
+              className={`res-buttons w-32 md:w-fit ${
                 index === 2 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
               onClick={() => handleCategoryChange("Main Dish", 2)}
@@ -146,7 +146,7 @@ const MenuPage = () => {
         <div
           // data-aos="fade-in"
           // data-aos-delay="600"
-          className="grid grid-cols-2 gap-5 w-[80%] mb-24"
+          className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full  md:w-[80%] mb-24"
         >
           <AnimatePresence>
             {filteredDishes.map((dish: Dish, index: number) => (
@@ -161,19 +161,19 @@ const MenuPage = () => {
                   <div className="flex flex-col">
                     <div className=" flex items-center gap-5">
                       <div className="w-[90%] flex items-center gap-3 flex-grow">
-                        <h1 className="text-[#C9AB81] text-[1.4rem] uppercase font-semibold font-[Poppins] ">
+                        <h1 className="text-[#C9AB81] text-[1.2rem] md:text-[1.4rem] uppercase font-semibold font-[Poppins] ">
                           {dish.title}
                         </h1>
                         <div className=" border border-l-transparent border-r-transparent border-t-[#715B3E] border-b-[#715B3E] py-[2px] flex-grow"></div>
                       </div>
                       <div className="w-[10%] flex justify-center">
-                        <p className="text-[#C9AB81] font-semibold text-[1.4rem]">
+                        <p className="text-[#C9AB81] font-semibold  text-[1.1rem] md:text-[1.4rem]">
                           {dish.price}Dhs
                         </p>
                       </div>
                     </div>
                     <div>
-                      <h1 className="ingredients italic text-xl">
+                      <h1 className="ingredients italic text-lg md:text-xl">
                         {dish.ingredients}
                       </h1>
                     </div>

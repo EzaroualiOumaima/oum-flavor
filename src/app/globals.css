@@ -10,10 +10,10 @@
 }
 
 .navbar-button {
-  font-size: 17px;
+  /* font-size: 17px; */
   color: white;
   font-family: inherit;
-  font-weight: 600;
+  /* font-weight: 600; */
   cursor: pointer;
   position: relative;
   border: none;
@@ -85,7 +85,7 @@ label {
 }
 
 .res-buttons{
-  @apply px-2 py-2 rounded duration-500 text-white
+  @apply px-2 py-2 rounded duration-500 text-white  
 }
 
 .reservation-inputs{

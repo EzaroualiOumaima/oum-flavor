@@ -67,7 +67,7 @@ const MessagePage = () => {
         theme="dark"
       />
       <div
-        className="bg-cover w-full relative "
+        className="bg-cover min-h-screen md:h-screen overflow-hidden w-full relative "
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
         }}

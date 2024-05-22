@@ -102,7 +102,7 @@ const PageReservation = () => {
         theme="dark"
       />
       <div
-        className=" w-full  overflow-y-auto  no-scroll-bar h-screen bg-cover"
+        className=" w-full relative overflow-y-auto  no-scroll-bar h-screen bg-cover"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
         }}

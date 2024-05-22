@@ -81,7 +81,7 @@ const ReviewPage = () => {
       />
 
       <div
-        className="bg-cover w-full overflow-y-auto  no-scroll-bar h-screen pt-20 md:pt-0"
+        className="bg-cover w-full  no-scroll-bar min-h-screen relative pt-20 md:pt-0"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
         }}
@@ -91,7 +91,7 @@ const ReviewPage = () => {
           onClick={() => setOpenMenu(true)}
         />
         
-        <div className=" mt-5  relative overflow-x-auto z-50 ">
+        <div className=" mt-5 overflow-x-auto overflow-y-auto z-50 ">
           <table className="w-full text-sm text-left rtl:text-right text-white  overflow-hidden ">
             <thead className="text-xs text-white uppercase ">
               <tr>

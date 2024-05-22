@@ -9,8 +9,8 @@ import { VscFeedback } from "react-icons/vsc";
 
 const Sidebar = () => {
   return (
-    <>
-      <div className="flex h-screen">
+    <div className="hidden md:block">
+      <div className="flex h-screen ">
         <div className=" md:flex flex-col w-64 bg-gray-100">
           <div className="flex items-center justify-center h-16 bg-[#C9AB81] ">
             <span className="text-white font-bold uppercase  text-xl">
@@ -62,7 +62,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

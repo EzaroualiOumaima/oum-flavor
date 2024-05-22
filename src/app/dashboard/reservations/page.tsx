@@ -8,16 +8,27 @@ import { MdEditSquare } from "react-icons/md";
 import bgImg from "@/assets/bgImg.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { RiMenu2Line } from "react-icons/ri";
+import { IoMdClose } from "react-icons/io";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import { MdOutlineMessage } from "react-icons/md";
+import { GiMeal } from "react-icons/gi";
+import { UserButton } from "@clerk/nextjs";
+import { SlCalender } from "react-icons/sl";
+import { VscFeedback } from "react-icons/vsc";
+import { IoAddCircleOutline } from "react-icons/io5";
 import {
   getReservations,
   deleteReservations,
   updateReservations,
 } from "@/store/reservation/reservationThunk";
-import { motion } from "framer-motion";
 import { Reservation } from "@/app/types";
 
 const PageReservation = () => {
+  const [openMenu, setOpenMenu] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [id, setId] = useState("");
@@ -96,115 +107,121 @@ const PageReservation = () => {
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImg.src})`,
         }}
       >
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 overflow-hidden ">
-          <thead className="text-xs uppercase ">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
-              >
-                Name
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 font-Poppins font-bold text-[#C9AB81] "
-              >
-                Email
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
-              >
-                Phone
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
-              >
-                Reservation Date
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
-              >
-                Reservation Time
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
-              >
-                Number Of People
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
-              >
-                Special Requests
-              </th>
-
-              <th
-                scope="col"
-                className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="overflow-y-auto text-[14px] font-Poppins text-white">
-            {reservations
-              .slice()
-              .reverse()
-              .map((reservation: Reservation, index: number) => (
-                <tr
-                  key={index}
-                  className={`${
-                    index % 2 === 0
-                      ? "even:bg-gray-50 even:dark:bg-gray-800"
-                      : ""
-                  } border-b dark:border-gray-700`}
+        <RiMenu2Line
+          className="h-10 z-0 w-10 absolute top-5 left-4 text-white md:hidden "
+          onClick={() => setOpenMenu(true)}
+        />
+        <div className="pt-20 z-50 md:pt-0">
+          <table className="w-full  text-sm text-left rtl:text-right text-gray-500 overflow-hidden ">
+            <thead className="text-xs uppercase ">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
                 >
-                  <td className="px-6 py-4 font-Poppins font-md">
-                    <h1 className="w-[140px] whitespace-nowrap overflow-hidden text-ellipsis text-[14px]">
-                      {reservation.name}
-                    </h1>
-                  </td>
-                  <td className=" px-6 py-4 whitespace-nowrap w-60">
-                    {reservation.email}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {reservation.phone}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {reservation.reservationDate}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {reservation.reservationTime}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {reservation.numberOfPeople}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap  ">
-                    <h1 className="w-32 overflow-hidden text-wrap ">
-                      {reservation.specialRequests}
-                    </h1>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex gap-3">
-                      <MdEditSquare
-                        onClick={() => updateModel(reservation)}
-                        className="cursor-pointer h-6 w-6 text-blue-600"
-                      />
+                  Name
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 font-Poppins font-bold text-[#C9AB81] "
+                >
+                  Email
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
+                >
+                  Phone
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
+                >
+                  Reservation Date
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
+                >
+                  Reservation Time
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
+                >
+                  Number Of People
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
+                >
+                  Special Requests
+                </th>
 
-                      <RiDeleteBin6Line
-                        onClick={() => deleteModel(reservation._id)}
-                        className="h-6 w-6 cursor-pointer text-red-600"
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                <th
+                  scope="col"
+                  className="px-6 py-3 font-Poppins font-bold text-[#C9AB81]"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="overflow-y-auto text-[14px] font-Poppins text-white">
+              {reservations
+                .slice()
+                .reverse()
+                .map((reservation: Reservation, index: number) => (
+                  <tr
+                    key={index}
+                    className={`${
+                      index % 2 === 0
+                        ? "even:bg-gray-50 even:dark:bg-gray-800"
+                        : ""
+                    } border-b dark:border-gray-700`}
+                  >
+                    <td className="px-6 py-4 font-Poppins font-md">
+                      <h1 className="w-[140px] whitespace-nowrap overflow-hidden text-ellipsis text-[14px]">
+                        {reservation.name}
+                      </h1>
+                    </td>
+                    <td className=" px-6 py-4 whitespace-nowrap w-60">
+                      {reservation.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {reservation.phone}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {reservation.reservationDate}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {reservation.reservationTime}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {reservation.numberOfPeople}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap  ">
+                      <h1 className="w-32 overflow-hidden text-wrap ">
+                        {reservation.specialRequests}
+                      </h1>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex gap-3">
+                        <MdEditSquare
+                          onClick={() => updateModel(reservation)}
+                          className="cursor-pointer h-6 w-6 text-blue-600"
+                        />
+
+                        <RiDeleteBin6Line
+                          onClick={() => deleteModel(reservation._id)}
+                          className="h-6 w-6 cursor-pointer text-red-600"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       {openDelete && (
         <>
@@ -322,9 +339,6 @@ const PageReservation = () => {
                   }
                   className="h-[3rem] text-lg font-[Poppins] text-white bg-transparent border-0 border-b-2 border-gray-100 focus:outline-none focus:border-[#C9AB81]"
                 >
-                 
-
-
                   {[...Array(24)].map((_, index) => {
                     const hour = index + 11 <= 12 ? index + 11 : index - 1;
                     const amPm = index < 12 ? "AM" : "PM";
@@ -363,6 +377,83 @@ const PageReservation = () => {
           </div>
         </>
       )}
+      <AnimatePresence>
+        {openMenu && (
+          <motion.div
+            initial={{
+              opacity: 0,
+              x: -500,
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            exit={{
+              opacity: 0,
+              x: -500,
+            }}
+            transition={{
+              duration: "0.4",
+            }}
+            className="bg-gray-900  text-white font-semibold  w-full h-screen flex flex-col items-center justify-between fixed top-0 right-0 left-0 bottom-0 z-50"
+          >
+            <div className="flex items-center justify-center h-16 w-full  md:w-0 bg-[#C9AB81] ">
+              <span className="text-white font-bold uppercase  text-xl">
+                OumFlavor
+              </span>
+            </div>
+            <div className="flex flex-col flex-1 relative  ">
+              <nav className="flex-1 px-3 py-10 bg-gray-900 ">
+                <Link
+                  href="/dashboard/dishes"
+                  className="flex items-center  px-4 py-2 mt-10 md:mt-6 text-2xl md:text-lg text-gray-100 hover:bg-gray-700"
+                >
+                  <GiMeal className="h-9 w-9 mr-3 md:h-6 md:w-6 md:mr-2" />
+                  Dishes
+                </Link>
+
+                <Link
+                  href="/dashboard/reservations"
+                  className="flex items-center px-4 py-2 mt-10 md:mt-6 text-2xl md:text-lg text-gray-100 hover:bg-gray-700"
+                >
+                  <SlCalender className="h-9 w-9 mr-3 md:h-6 md:w-6 md:mr-2" />
+                  Reservations
+                </Link>
+                <Link
+                  href="/dashboard/messages"
+                  className="flex items-center px-4 py-2 mt-10 md:mt-6 text-2xl md:text-lg text-gray-100 hover:bg-gray-700"
+                >
+                  <MdOutlineMessage className="h-9 w-9 mr-3 md:h-6 md:w-6 md:mr-2" />
+                  Messages
+                </Link>
+                <Link
+                  href="/dashboard/reviews"
+                  className="flex items-center px-4 py-2 mt-10 md:mt-6 text-gray-100 text-2xl md:text-lg hover:bg-gray-700"
+                >
+                  <VscFeedback className="h-9 w-9 mr-3 md:h-6 md:w-6 md:mr-2" />
+                  Reviews
+                </Link>
+                <Link
+                  href="/dashboard/add"
+                  className="flex items-center px-4 py-2 mt-10 md:mt-6 text-gray-100 text-2xl md:text-lg hover:bg-gray-700"
+                >
+                  <IoAddCircleOutline className="h-9 w-9 mr-3 md:h-6 md:w-6 md:mr-2" />
+                  Add
+                </Link>
+
+                <div className="absolute -left-8 bottom-9 md:bottom-5  md:left-6">
+                  <UserButton afterSignOutUrl="/" />
+                </div>
+              </nav>
+            </div>
+
+            <IoCloseCircleOutline
+              className="w-10 h-10 absolute cursor-pointer top-3 right-4 text-white"
+              onClick={() => setOpenMenu(false)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

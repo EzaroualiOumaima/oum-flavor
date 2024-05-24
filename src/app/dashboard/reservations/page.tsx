@@ -20,12 +20,16 @@ import { UserButton } from "@clerk/nextjs";
 import { SlCalender } from "react-icons/sl";
 import { VscFeedback } from "react-icons/vsc";
 import { IoAddCircleOutline } from "react-icons/io5";
+import { IoMdCheckmark } from "react-icons/io";
+
 import {
   getReservations,
   deleteReservations,
   updateReservations,
 } from "@/store/reservation/reservationThunk";
 import { Reservation } from "@/app/types";
+import Footer from "@/components/Footer";
+import { sendMail } from "@/actions/mailReservation";
 
 const PageReservation = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -51,6 +55,21 @@ const PageReservation = () => {
       reservationTime: item.reservationTime,
     });
     setOpenUpdate(true);
+  };
+
+  const handleSendMail = async (reservation: Reservation) => {
+    try {
+      await sendMail({
+        from: reservation.email,
+        name: reservation.name,
+        subject: "Reservation Confirmation",
+        body: `Your reservation for ${reservation.numberOfPeople} people on ${reservation.reservationDate} at ${reservation.reservationTime}H has been confirmed.`,
+      });
+      toast.success("Confirmation email sent");
+    } catch (error) {
+      toast.error("Error sending email");
+      console.error("Error sending email:", error);
+    }
   };
 
   const handleUpdate = async () => {
@@ -206,6 +225,11 @@ const PageReservation = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex gap-3">
+                        <IoMdCheckmark
+                          onClick={() => handleSendMail(reservation)}
+                          className="w-6 cursor-pointer h-6 text-green-600"
+                        />
+
                         <MdEditSquare
                           onClick={() => updateModel(reservation)}
                           className="cursor-pointer h-6 w-6 text-blue-600"
@@ -339,7 +363,49 @@ const PageReservation = () => {
                   }
                   className="h-[3rem] text-lg font-[Poppins] text-white bg-transparent border-0 border-b-2 border-gray-100 focus:outline-none focus:border-[#C9AB81]"
                 >
-                  {[...Array(24)].map((_, index) => {
+                  <option className="text-slate-900" value="11">
+                    11:00 AM
+                  </option>
+                  <option className="text-slate-900" value="12">
+                    12:00 AM
+                  </option>
+                  <option className="text-slate-900" value="13">
+                    1:00 PM
+                  </option>
+                  <option className="text-slate-900" value="14">
+                    2:00 PM
+                  </option>
+                  <option className="text-slate-900" value="15">
+                    3:00 PM
+                  </option>
+                  <option className="text-slate-900" value="16">
+                    4:00 PM
+                  </option>
+                  <option className="text-slate-900" value="17">
+                    5:00 PM
+                  </option>
+                  <option className="text-slate-900" value="18">
+                    6:00 PM
+                  </option>
+                  <option className="text-slate-900" value="19">
+                    7:00 PM
+                  </option>
+                  <option className="text-slate-900" value="20">
+                    8:00 PM
+                  </option>
+                  <option className="text-slate-900" value="21">
+                    9:00 PM
+                  </option>
+                  <option className="text-slate-900" value="22">
+                    10:00 PM
+                  </option>
+                  <option className="text-slate-900" value="23">
+                    11:00 PM
+                  </option>
+                  <option className="text-slate-900" value="00">
+                    12:00 PM
+                  </option>
+                  {/* {[...Array(24)].map((_, index) => {
                     const hour = index + 11 <= 12 ? index + 11 : index - 1;
                     const amPm = index < 12 ? "AM" : "PM";
                     const value = hour.toString().padStart(2, "0");
@@ -353,7 +419,7 @@ const PageReservation = () => {
                         {amPm}
                       </option>
                     );
-                  })}
+                  })} */}
                 </select>
               </div>
 

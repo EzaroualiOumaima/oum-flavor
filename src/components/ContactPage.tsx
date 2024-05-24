@@ -71,7 +71,7 @@ const ContactPage = () => {
   return (
     <>
       <div
-        className="w-full h-screen flex items-center justify-center bg-cover"
+        className="w-full h-[80vh] md:h-screen flex items-center justify-center bg-cover"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5 ), rgba(0, 0, 0, 0.4)), url(${conatctImg.src})`,
           backgroundPosition: "center",
@@ -90,7 +90,7 @@ const ContactPage = () => {
         <div className="flex flex-col px-8 items-center md:items-start gap-3 w-full md:w-5/12">
           <h1
             data-aos="fade-up-right"
-            className=" title-contact text-6xl text-center md:text-8xl font-semibold text-[#C9AB81] "
+            className=" title-contact text-[55px] text-center md:text-8xl font-semibold text-[#C9AB81] "
           >
             __Write to Us__
           </h1>
@@ -105,19 +105,16 @@ const ContactPage = () => {
             <p className="contact-p">
               {" "}
               Please email us:{" "}
-              <span className="text-white/75">
-                oumflavor@gmail.com
-              </span>
+              <span className="text-white/75">oumflavor@gmail.com</span>
             </p>
             <p className="contact-p">
               Reserve by email:{" "}
-              <span className="text-white/75">
-                oumflavor@gmail.com
-              </span>
+              <span className="text-white/75">oumflavor@gmail.com</span>
               <br />
             </p>
             <p className="contact-p ">
-              Tel : <span className="text-white/75">+212 6 89 25 65 61</span> <br />{" "}
+              Tel : <span className="text-white/75">+212 6 89 25 65 61</span>{" "}
+              <br />{" "}
             </p>
             <h2 className="contact-p font-bold tracking-wide underline mt-4">
               OPENING HOURS:
@@ -157,13 +154,14 @@ const ContactPage = () => {
             onChange={(e) => setFormData({ ...formData, body: e.target.value })}
           ></textarea>
           <div className="flex items-center gap-5 ">
-            <div data-aos="fade-up" data-aos-delay="500" >
+            <div data-aos="fade-up" data-aos-delay="500">
               <button
                 onClick={handleSubmit}
                 disabled={isDisabled}
-                className={`text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500 ${
-                  isDisabled ? "cursor-not-allowed" : "cursor-pointer"
-                }`}
+                className={`w-[150px] bg-transparent border border-[#C9AB81] h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#C9AB81] before:to-[#d3b182] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0 text-xl font-[Poppins] text-[#fff] ${ isDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
+                // className={`text-xl font-[Poppins]  text-white bg-[#C9AB81] rounded border border-[#C9AB81] px-6 py-3  hover:scale-110 duration-500 ${
+                //   isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+                // }`}
               >
                 Send
               </button>

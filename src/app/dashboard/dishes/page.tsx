@@ -144,7 +144,7 @@ const MenuPage = () => {
           </li>
           <li className="text-white p-2">
             <button
-              className={` res-buttons w-32 md:w-0 ${
+              className={` res-buttons w-32  ${
                 index === 2 ? "bg-[#C9AB81]" : "bg-transparent"
               }`}
               onClick={() => handleChange("Main Dish", 2)}

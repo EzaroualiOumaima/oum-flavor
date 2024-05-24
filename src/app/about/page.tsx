@@ -7,6 +7,7 @@ import bgImg from "@/assets/bgImg.jpg";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Footer from "@/components/Footer";
 
 const AboutPage = () => {
   useEffect(() => {
@@ -18,18 +19,21 @@ const AboutPage = () => {
     });
   }, []);
   return (
+    <>
     <div
-      className="flex items-center justify-between h-screen bg-cover w-full p-28 pt-36 "
+      className="flex flex-col md:flex-row items-center justify-between h-auto md:h-screen bg-cover w-full md:p-28 pt-36 gap-5 md:gap-0  pb-20 md:pb-0"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7 ), rgba(0, 0, 0, 0.7)), url(${bgImg.src})`,
       }}
     >
-      <div className="flex flex-col w-[50%] text-center">
-        <h1 className=" title-about text-[120px] text-[#C9AB81]">About Us</h1>
+      <div className="flex flex-col w-[90%] md:w-[50%] text-center">
+        <h1 className=" title-about text-6xl md:text-[120px] text-[#C9AB81]">
+          About Us
+        </h1>
 
         <p
           data-aos="fade-up"
-          className="text-xl text-white leading-10 font-[Poppins] text-justify"
+          className="text-xl text-white leading-8 md:leading-10 font-[Poppins] text-justify "
         >
           Welcome to Oum Flavor, where culinary excellence meets convenience.
           Our restaurants name encapsulates the essence of maternal love and the
@@ -42,14 +46,14 @@ const AboutPage = () => {
           fingertips.
         </p>
       </div>
-      <div>
-        <div className="absolute z-30 translate-y-24 -translate-x-[10rem]">
+      <div className="">
+        <div className="absolute z-30 translate-y-24 -translate-x-[10rem] ">
           <Image
             data-aos="fade-up"
             data-aos-delay="200"
             src={topImg}
             alt="img1"
-            className="rounded-lg"
+            className="rounded-lg hidden md:block"
           />
         </div>
         <div>
@@ -57,11 +61,13 @@ const AboutPage = () => {
             data-aos="fade-left"
             src={underImg}
             alt="img2"
-            className="rounded-lg"
+            className="rounded-lg hidden md:block"
           />
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

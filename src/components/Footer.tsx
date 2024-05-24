@@ -61,6 +61,12 @@ const Footer = () => {
                   Menu
                 </Link>
                 <Link
+                  href="/reviews"
+                  className="cursor-pointer hover:text-[#C9AB81]"
+                >
+                  Reviews
+                </Link>
+                <Link
                   href="/reservation"
                   className="cursor-pointer hover:text-[#C9AB81]"
                 >

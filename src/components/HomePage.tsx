@@ -23,8 +23,8 @@ const HomePage = () => {
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6 ), rgba(0, 0, 0, 0.6)), url(${image1.src})`,
         }}
       >
-        <h1 className="title italic text-[3.5rem] md:text-[8.5rem] text-center mx-4">Welcome to Oum Flavor</h1>
-        <p className="text-white text-center text-xl md:text-2xl mx-4 mt-4  font-[JosefinSans] italic md:-mt-10">
+        <h1 className="title italic text-[3.2rem] md:text-[8.5rem] text-center mx-4">Welcome to Oum Flavor</h1>
+        <p className="text-white text-center text-[18px] md:text-2xl mx-4 mt-4  font-[JosefinSans] italic md:-mt-10">
           The culinary expert that your fine dining restaurant has been waiting{" "}
           <br />
           for. Set the table for a successful online venture with ease We!{" "}

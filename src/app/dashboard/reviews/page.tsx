@@ -25,6 +25,7 @@ import { UserButton } from "@clerk/nextjs";
 import { SlCalender } from "react-icons/sl";
 import { VscFeedback } from "react-icons/vsc";
 import { IoAddCircleOutline } from "react-icons/io5";
+import Footer from "@/components/Footer";
 const ReviewPage = () => {
   const[openMenu , setOpenMenu] = useState(false)
   const { reviews } = useSelector((state: RootState) => state.reviews);
@@ -264,6 +265,7 @@ const ReviewPage = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* <Footer/> */}
     </>
   );
 };

@@ -18,7 +18,7 @@ const Navbar = () => {
           className={`${
             (path.includes("/dashboard") || path.includes("/sign-in")) &&
             "hidden"
-          } bg-white/5 backdrop-blur-lg flex fixed  pr-7 h-24 w-full justify-between items-center overflow-hidden z-50 `}
+          } bg-white/5 backdrop-blur-lg flex fixed  pr-7 h-20 md:h-[85px] w-full justify-between items-center overflow-hidden z-50 `}
         >
           <div className="w-auto ">
             <Image
@@ -44,9 +44,7 @@ const Navbar = () => {
               <button className="navbar-button">Contact Us</button>
             </Link>
             <Link href="/reservation">
-              <button className="p-3 border border-[#C9AB81] rounded hover:scale-110 duration-500 hover:bg-[#C9AB81]  text-lg font-semibold font-[Poppins]">
-                RESERVATION
-              </button>
+              <button className="button">Find a table</button>
             </Link>
           </div>
           <div className="block md:hidden">
@@ -94,9 +92,7 @@ const Navbar = () => {
                 <button className="navbar-button ">Contact Us</button>
               </Link>
               <Link href="/reservation">
-                <button className="  p-3 border border-[#C9AB81] rounded hover:scale-110 duration-500 hover:bg-[#C9AB81]  text-xl font-semibold font-[Poppins]">
-                  RESERVATION
-                </button>
+                <button className=" button">Find a table</button>
               </Link>
             </div>
 

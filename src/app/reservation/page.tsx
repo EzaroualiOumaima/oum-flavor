@@ -14,6 +14,7 @@ import { addReviews } from "@/store/reviews/reviewThunk";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { sendMail } from "@/actions/mailReservation";
+import Footer from "@/components/Footer";
 
 const ReservationPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -102,41 +103,46 @@ const ReservationPage = () => {
           specialRequests: instructions.specialRequests,
         })
       );
-      try {
-        await sendMail({
-          from: instructions.email,
-          name: instructions.name,
-          subject: "Reservation Confirmation",
-          body: "Your reservation has been confirmed.",
-        });
 
-        // await sendMail({
-        //   from: "oumflavor@gmail.com",
-        //   name: "OumFlavor",
-        //   subject: "New Reservation",
-        //   body: `You have received a new reservation from ${instructions.name}.`,
-        // });
+      // try {
+      //   await sendMail({
+      //     from: instructions.email,
+      //     name: instructions.name,
+      //     subject: "Reservation Confirmation",
+      //     body: "Your reservation has been confirmed.",
+      //   });
 
-        // Resetting the instructions state to clear the input fields
-        setInstructions({
-          name: "",
-          email: "",
-          phone: "",
-          reservationDate: getCurrentDate(),
-          reservationTime: "",
-          numberOfPeople: 1,
-          specialRequests: "",
-        });
+      //   // await sendMail({
+      //   //   from: "oumflavor@gmail.com",
+      //   //   name: "OumFlavor",
+      //   //   subject: "New Reservation",
+      //   //   body: `You have received a new reservation from ${instructions.name}.`,
+      //   // });
 
-        return setIsShown(true);
-      } catch (error) {
-        console.error("Error sending emails: ", error);
-        toast.error("Failed to send confirmation emails.");
-      }
+      //   // Resetting the instructions state to clear the input fields
+
+      //   return setIsShown(true);
+      // } catch (error) {
+      //   console.error("Error sending emails: ", error);
+      //   toast.error("Failed to send confirmation emails.");
+      // }
     } else {
       toast.error("Data Failed");
     }
+
+    setInstructions({
+      name: "",
+      email: "",
+      phone: "",
+      reservationDate: getCurrentDate(),
+      reservationTime: "",
+      numberOfPeople: 1,
+      specialRequests: "",
+    });
+
+    return setIsShown(true);
   };
+
   // add reviews
   const handleSendFeedback = (e: FormEvent) => {
     console.log("Send button clicked");
@@ -189,7 +195,6 @@ const ReservationPage = () => {
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1 ), rgba(0, 0, 0, 0.2)), url(${reservationImg.src})`,
           backgroundPosition: "bottom center",
-          
         }}
       >
         <h1 className="text-3xl md:text-6xl tracking-wider font-bold text-white font-[JosefinSans]">
@@ -219,7 +224,7 @@ const ReservationPage = () => {
           <p
             data-aos="fade-up"
             data-aos-delay="250"
-            className="font-[Poppins] text-center text-lg md:text-xl  leading-7"
+            className="font-[Poppins] text-center text-[16px] md:text-xl  leading-7"
           >
             OumFlavor is available nightly for group reservations small and
             large. <br />
@@ -272,6 +277,7 @@ const ReservationPage = () => {
                     type="text"
                     id="text"
                     name="text"
+                    required
                     value={formdataReview.name}
                     onChange={(e) =>
                       setFormdataReview({
@@ -290,6 +296,7 @@ const ReservationPage = () => {
                     Message
                   </label>
                   <textarea
+                    required
                     id="message"
                     name="message"
                     value={formdataReview.message}
@@ -304,7 +311,8 @@ const ReservationPage = () => {
                 </div>
                 <button
                   onClick={handleSendFeedback}
-                  className="rounded border-0 bg-[#C9AB81] py-2 px-6 text-lg text-white hover:bg-[#d6b27f] focus:outline-none"
+                  className="w-full bg-white/5 border border-[#C9AB81] h-[40px] my-3 flex items-center justify-center rounded-xl cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#C9AB81] before:to-[#d3b182] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0 text-xl font-[Poppins] text-[#fff] "
+                  // className="rounded border-0 bg-[#C9AB81] py-2 px-6 text-lg text-white hover:bg-[#d6b27f] focus:outline-none"
                 >
                   Send
                 </button>
@@ -371,7 +379,7 @@ const ReservationPage = () => {
                   }
                   onChange={handleChange}
                   min={minDate}
-                  className=" h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white  focus:outline-none  focus:border-[#C9AB81]"
+                  className=" h-[3rem] font-[Poppins]  text-lg bg-transparent border-b-2  text-white  focus:outline-none  focus:border-[#C9AB81] w-full"
                 />
                 <select
                   name="reservationTime"
@@ -462,7 +470,9 @@ const ReservationPage = () => {
                 <button
                   data-aos="fade-up"
                   data-aos-delay="350"
-                  className="text-lg  font-[Poppins] font-semibold text-white  bg-[#C9AB81] border border-[#C9AB81] px-6 py-3 hover:bg-[#b49365]   hover:scale-110 duration-500 rounded-sm "
+                  className="w-[250px] bg-transparent border border-[#C9AB81] h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#C9AB81] before:to-[#d3b182] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0 text-xl font-[Poppins] text-[#fff] "
+
+                  // className="text-lg  font-[Poppins] font-semibold text-white  bg-[#C9AB81] border border-[#C9AB81] px-6 py-3 hover:bg-[#b49365]   hover:scale-110 duration-500 rounded-sm "
                 >
                   BOOK A TABLE NOW
                 </button>
@@ -494,6 +504,7 @@ const ReservationPage = () => {
           </div>
         </div>
       )}
+      {/* <Footer/> */}
     </>
   );
 };
